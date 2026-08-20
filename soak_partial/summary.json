@@ -1,0 +1,31 @@
+{
+  "updated_at_utc": "2026-08-20T14:02:29Z",
+  "complete_blocks": 1,
+  "requests": 2473,
+  "by_quant": {
+    "q4": {
+      "requests": 2372,
+      "passed": 2372,
+      "success_rate": 1.0,
+      "task_pass_rate": 1.0,
+      "timeouts_or_errors": 0,
+      "deterministic_mismatches": 0,
+      "generated_tokens": 77962.0,
+      "decode_tokens_per_second": 29.80379873571553,
+      "draft_acceptance": 0.7108659841107658,
+      "median_wall_seconds": 1.8535273590241559
+    },
+    "q6": {
+      "requests": 101,
+      "passed": 101,
+      "success_rate": 1.0,
+      "task_pass_rate": 1.0,
+      "timeouts_or_errors": 0,
+      "deterministic_mismatches": 0,
+      "generated_tokens": 3330.0,
+      "decode_tokens_per_second": 24.13300669659048,
+      "draft_acceptance": 0.7111111111111111,
+      "median_wall_seconds": 2.328427268017549
+    }
+  }
+}

@@ -1,0 +1,982 @@
+{
+  "modes": {
+    "cache_off": {
+      "cache_prompt": false,
+      "system_raw_tokens": 18243,
+      "cases": [
+        {
+          "turn": 1,
+          "order_id": "ORD-1001",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1001"
+          },
+          "expected": "STATUS=packed; ETA=2h",
+          "actual": "STATUS=packed; ETA=2h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 18527,
+            "prompt_ms": 27698.687,
+            "prompt_per_token_ms": 1.4950443676796028,
+            "prompt_per_second": 668.8764705706086,
+            "predicted_n": 33,
+            "predicted_ms": 885.22,
+            "predicted_per_token_ms": 26.824848484848484,
+            "predicted_per_second": 37.27886852985698,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18369,
+            "prompt_ms": 28094.025,
+            "prompt_per_token_ms": 1.5294259349991834,
+            "prompt_per_second": 653.840095892276,
+            "predicted_n": 9,
+            "predicted_ms": 222.229,
+            "predicted_per_token_ms": 24.692111111111114,
+            "predicted_per_second": 40.49876478767398,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 28.68019051698502,
+          "final_wall_seconds": 28.789486990019213
+        },
+        {
+          "turn": 2,
+          "order_id": "ORD-1002",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1002"
+          },
+          "expected": "STATUS=shipped; ETA=1d",
+          "actual": "STATUS=shipped; ETA=1d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 18659,
+            "prompt_ms": 28765.267,
+            "prompt_per_token_ms": 1.541629615735034,
+            "prompt_per_second": 648.6642380201095,
+            "predicted_n": 33,
+            "predicted_ms": 882.433,
+            "predicted_per_token_ms": 26.74039393939394,
+            "predicted_per_second": 37.39660688120232,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18503,
+            "prompt_ms": 28021.189,
+            "prompt_per_token_ms": 1.5144132843322704,
+            "prompt_per_second": 660.3217301021739,
+            "predicted_n": 10,
+            "predicted_ms": 443.981,
+            "predicted_per_token_ms": 44.3981,
+            "predicted_per_second": 22.52348636540753,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 30.459540295996703,
+          "final_wall_seconds": 29.252485676959623
+        },
+        {
+          "turn": 3,
+          "order_id": "ORD-1003",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1003"
+          },
+          "expected": "STATUS=delayed; ETA=3d",
+          "actual": "STATUS=delayed; ETA=3d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 18794,
+            "prompt_ms": 28901.338,
+            "prompt_per_token_ms": 1.5377959987229968,
+            "prompt_per_second": 650.2813122354405,
+            "predicted_n": 33,
+            "predicted_ms": 873.368,
+            "predicted_per_token_ms": 26.46569696969697,
+            "predicted_per_second": 37.784759688928375,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18638,
+            "prompt_ms": 28277.026,
+            "prompt_per_token_ms": 1.5171706191651466,
+            "prompt_per_second": 659.1216487900814,
+            "predicted_n": 10,
+            "predicted_ms": 435.638,
+            "predicted_per_token_ms": 43.5638,
+            "predicted_per_second": 22.95483865043913,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 30.484566861996427,
+          "final_wall_seconds": 29.394700453034602
+        },
+        {
+          "turn": 4,
+          "order_id": "ORD-1004",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1004"
+          },
+          "expected": "STATUS=delivered; ETA=0h",
+          "actual": "STATUS=delivered; ETA=0h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 18929,
+            "prompt_ms": 29268.056,
+            "prompt_per_token_ms": 1.5462019124095303,
+            "prompt_per_second": 646.7460633531656,
+            "predicted_n": 33,
+            "predicted_ms": 889.335,
+            "predicted_per_token_ms": 26.949545454545454,
+            "predicted_per_second": 37.10637723692422,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18773,
+            "prompt_ms": 28917.183,
+            "prompt_per_token_ms": 1.5403602514249188,
+            "prompt_per_second": 649.1987826061758,
+            "predicted_n": 10,
+            "predicted_ms": 441.458,
+            "predicted_per_token_ms": 44.1458,
+            "predicted_per_second": 22.6522115354122,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 30.891770214017015,
+          "final_wall_seconds": 30.10682533099316
+        },
+        {
+          "turn": 5,
+          "order_id": "ORD-1005",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1005"
+          },
+          "expected": "STATUS=processing; ETA=6h",
+          "actual": "STATUS=processing; ETA=6h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19064,
+            "prompt_ms": 28911.977,
+            "prompt_per_token_ms": 1.5165745383969786,
+            "prompt_per_second": 659.380712706018,
+            "predicted_n": 33,
+            "predicted_ms": 876.247,
+            "predicted_per_token_ms": 26.552939393939393,
+            "predicted_per_second": 37.660613959306,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18906,
+            "prompt_ms": 28691.295,
+            "prompt_per_token_ms": 1.5175761662964138,
+            "prompt_per_second": 658.9455094306479,
+            "predicted_n": 9,
+            "predicted_ms": 220.84,
+            "predicted_per_token_ms": 24.537777777777777,
+            "predicted_per_second": 40.753486687194346,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 30.51806996797677,
+          "final_wall_seconds": 29.767237662978005
+        },
+        {
+          "turn": 6,
+          "order_id": "ORD-1006",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1006"
+          },
+          "expected": "STATUS=shipped; ETA=2d",
+          "actual": "STATUS=shipped; ETA=2d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19196,
+            "prompt_ms": 29091.14,
+            "prompt_per_token_ms": 1.515479266513857,
+            "prompt_per_second": 659.8572623829799,
+            "predicted_n": 33,
+            "predicted_ms": 851.49,
+            "predicted_per_token_ms": 25.802727272727275,
+            "predicted_per_second": 38.755593136736785,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19040,
+            "prompt_ms": 28874.67,
+            "prompt_per_token_ms": 1.5165267857142857,
+            "prompt_per_second": 659.4014754108013,
+            "predicted_n": 10,
+            "predicted_ms": 430.582,
+            "predicted_per_token_ms": 43.0582,
+            "predicted_per_second": 23.224380025175225,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 30.812666011042893,
+          "final_wall_seconds": 30.144001901033334
+        },
+        {
+          "turn": 7,
+          "order_id": "ORD-1007",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1007"
+          },
+          "expected": "STATUS=packed; ETA=4h",
+          "actual": "STATUS=packed; ETA=4h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19331,
+            "prompt_ms": 29955.401,
+            "prompt_per_token_ms": 1.5496043143137965,
+            "prompt_per_second": 645.3260298535146,
+            "predicted_n": 33,
+            "predicted_ms": 874.434,
+            "predicted_per_token_ms": 26.497999999999998,
+            "predicted_per_second": 37.73869726017058,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19173,
+            "prompt_ms": 28783.484,
+            "prompt_per_token_ms": 1.5012509257810462,
+            "prompt_per_second": 666.1111629155108,
+            "predicted_n": 9,
+            "predicted_ms": 216.683,
+            "predicted_per_token_ms": 24.075888888888887,
+            "predicted_per_second": 41.53533041355344,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 31.52452604699647,
+          "final_wall_seconds": 29.717386053991504
+        },
+        {
+          "turn": 8,
+          "order_id": "ORD-1008",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1008"
+          },
+          "expected": "STATUS=delayed; ETA=5d",
+          "actual": "STATUS=delayed; ETA=5d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19463,
+            "prompt_ms": 29263.15,
+            "prompt_per_token_ms": 1.5035272054667832,
+            "prompt_per_second": 665.1026974197924,
+            "predicted_n": 33,
+            "predicted_ms": 881.144,
+            "predicted_per_token_ms": 26.701333333333334,
+            "predicted_per_second": 37.45131329271947,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19307,
+            "prompt_ms": 29258.141,
+            "prompt_per_token_ms": 1.5154162220956129,
+            "prompt_per_second": 659.8847137964096,
+            "predicted_n": 10,
+            "predicted_ms": 444.308,
+            "predicted_per_token_ms": 44.4308,
+            "predicted_per_second": 22.506909621253723,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 30.870664075016975,
+          "final_wall_seconds": 30.425304117030464
+        },
+        {
+          "turn": 9,
+          "order_id": "ORD-1009",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1009"
+          },
+          "expected": "STATUS=delivered; ETA=0h",
+          "actual": "STATUS=delivered; ETA=0h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19598,
+            "prompt_ms": 30149.241,
+            "prompt_per_token_ms": 1.5383835595468927,
+            "prompt_per_second": 650.0329477614379,
+            "predicted_n": 33,
+            "predicted_ms": 868.561,
+            "predicted_per_token_ms": 26.320030303030304,
+            "predicted_per_second": 37.99387722911804,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19442,
+            "prompt_ms": 30236.463,
+            "prompt_per_token_ms": 1.555213609710935,
+            "prompt_per_second": 642.9984882821777,
+            "predicted_n": 10,
+            "predicted_ms": 430.172,
+            "predicted_per_token_ms": 43.0172,
+            "predicted_per_second": 23.246515347349433,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 31.690390786970966,
+          "final_wall_seconds": 31.376246898958925
+        },
+        {
+          "turn": 10,
+          "order_id": "ORD-1010",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1010"
+          },
+          "expected": "STATUS=processing; ETA=8h",
+          "actual": "STATUS=processing; ETA=8h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19733,
+            "prompt_ms": 30599.423,
+            "prompt_per_token_ms": 1.5506726296052298,
+            "prompt_per_second": 644.8814410650815,
+            "predicted_n": 33,
+            "predicted_ms": 854.469,
+            "predicted_per_token_ms": 25.893,
+            "predicted_per_second": 38.62047657668096,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19575,
+            "prompt_ms": 30051.927,
+            "prompt_per_token_ms": 1.5352197701149426,
+            "prompt_per_second": 651.3725392717746,
+            "predicted_n": 9,
+            "predicted_ms": 217.06,
+            "predicted_per_token_ms": 24.11777777777778,
+            "predicted_per_second": 41.46318990140975,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 32.17164876800962,
+          "final_wall_seconds": 30.99657408799976
+        },
+        {
+          "turn": 11,
+          "order_id": "ORD-1011",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1011"
+          },
+          "expected": "STATUS=shipped; ETA=1d",
+          "actual": "STATUS=shipped; ETA=1d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 19865,
+            "prompt_ms": 29962.63,
+            "prompt_per_token_ms": 1.5083126101182986,
+            "prompt_per_second": 662.9925343669765,
+            "predicted_n": 33,
+            "predicted_ms": 873.559,
+            "predicted_per_token_ms": 26.47148484848485,
+            "predicted_per_second": 37.7764982101953,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19709,
+            "prompt_ms": 30189.179,
+            "prompt_per_token_ms": 1.5317458521487646,
+            "prompt_per_second": 652.8498174793027,
+            "predicted_n": 10,
+            "predicted_ms": 440.038,
+            "predicted_per_token_ms": 44.0038,
+            "predicted_per_second": 22.725310086856133,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 31.537792879040353,
+          "final_wall_seconds": 31.37119439401431
+        },
+        {
+          "turn": 12,
+          "order_id": "ORD-1012",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1012"
+          },
+          "expected": "STATUS=packed; ETA=3h",
+          "actual": "STATUS=packed; ETA=3h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 20000,
+            "prompt_ms": 30861.321,
+            "prompt_per_token_ms": 1.54306605,
+            "prompt_per_second": 648.0603989699599,
+            "predicted_n": 33,
+            "predicted_ms": 889.375,
+            "predicted_per_token_ms": 26.950757575757574,
+            "predicted_per_second": 37.1047083626142,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 19842,
+            "prompt_ms": 30351.966,
+            "prompt_per_token_ms": 1.529682794073178,
+            "prompt_per_second": 653.7303053120183,
+            "predicted_n": 9,
+            "predicted_ms": 217.575,
+            "predicted_per_token_ms": 24.174999999999997,
+            "predicted_per_second": 41.36504653567735,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 32.52492393495049,
+          "final_wall_seconds": 31.334823732962832
+        }
+      ],
+      "quality_passed": 12,
+      "quality_total": 12,
+      "prompt_tokens_evaluated": 460436,
+      "prompt_seconds": 703.174179,
+      "prompt_tokens_per_second": 654.7965123730745,
+      "generated_tokens": 511,
+      "decode_seconds": 14.660199,
+      "decode_tokens_per_second": 34.85627991816482,
+      "draft_generated": 469,
+      "draft_accepted": 434,
+      "draft_acceptance": 0.9253731343283582,
+      "wall_seconds": 734.8430176589754
+    },
+    "cache_on": {
+      "cache_prompt": true,
+      "system_raw_tokens": 18243,
+      "cases": [
+        {
+          "turn": 1,
+          "order_id": "ORD-1001",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1001"
+          },
+          "expected": "STATUS=packed; ETA=2h",
+          "actual": "STATUS=packed; ETA=2h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 0,
+            "prompt_n": 18527,
+            "prompt_ms": 27655.667,
+            "prompt_per_token_ms": 1.4927223511631673,
+            "prompt_per_second": 669.9169468593905,
+            "predicted_n": 33,
+            "predicted_ms": 876.051,
+            "predicted_per_token_ms": 26.547,
+            "predicted_per_second": 37.66903981617508,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 0,
+            "prompt_n": 18369,
+            "prompt_ms": 27711.078,
+            "prompt_per_token_ms": 1.5085784746039523,
+            "prompt_per_second": 662.8756918081641,
+            "predicted_n": 9,
+            "predicted_ms": 212.458,
+            "predicted_per_token_ms": 23.606444444444445,
+            "predicted_per_second": 42.36131376554425,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 28.648591545003,
+          "final_wall_seconds": 28.292116727971006
+        },
+        {
+          "turn": 2,
+          "order_id": "ORD-1002",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1002"
+          },
+          "expected": "STATUS=shipped; ETA=1d",
+          "actual": "STATUS=shipped; ETA=1d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 18559,
+            "prompt_n": 100,
+            "prompt_ms": 746.235,
+            "prompt_per_token_ms": 7.46235,
+            "prompt_per_second": 134.00604367256963,
+            "predicted_n": 33,
+            "predicted_ms": 862.931,
+            "predicted_per_token_ms": 26.149424242424242,
+            "predicted_per_second": 38.24175976990049,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 18377,
+            "prompt_n": 126,
+            "prompt_ms": 783.614,
+            "prompt_per_token_ms": 6.21915873015873,
+            "prompt_per_second": 160.79345187809304,
+            "predicted_n": 10,
+            "predicted_ms": 435.025,
+            "predicted_per_token_ms": 43.5025,
+            "predicted_per_second": 22.987184644560656,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.2636771199759096,
+          "final_wall_seconds": 2.0175891969702207
+        },
+        {
+          "turn": 3,
+          "order_id": "ORD-1003",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1003"
+          },
+          "expected": "STATUS=delayed; ETA=3d",
+          "actual": "STATUS=delayed; ETA=3d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 18691,
+            "prompt_n": 103,
+            "prompt_ms": 770.554,
+            "prompt_per_token_ms": 7.481106796116505,
+            "prompt_per_second": 133.6700607614781,
+            "predicted_n": 33,
+            "predicted_ms": 872.135,
+            "predicted_per_token_ms": 26.428333333333335,
+            "predicted_per_second": 37.83817872233083,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 18514,
+            "prompt_n": 124,
+            "prompt_ms": 764.541,
+            "prompt_per_token_ms": 6.1656532258064525,
+            "prompt_per_second": 162.18881655790858,
+            "predicted_n": 10,
+            "predicted_ms": 434.595,
+            "predicted_per_token_ms": 43.459500000000006,
+            "predicted_per_second": 23.009928784270414,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.361957043001894,
+          "final_wall_seconds": 1.8792285530362278
+        },
+        {
+          "turn": 4,
+          "order_id": "ORD-1004",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1004"
+          },
+          "expected": "STATUS=delivered; ETA=0h",
+          "actual": "STATUS=delivered; ETA=0h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 18826,
+            "prompt_n": 103,
+            "prompt_ms": 766.759,
+            "prompt_per_token_ms": 7.44426213592233,
+            "prompt_per_second": 134.33164788414612,
+            "predicted_n": 33,
+            "predicted_ms": 873.351,
+            "predicted_per_token_ms": 26.46518181818182,
+            "predicted_per_second": 37.785495178914324,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 18649,
+            "prompt_n": 124,
+            "prompt_ms": 762.166,
+            "prompt_per_token_ms": 6.1465000000000005,
+            "prompt_per_second": 162.69421622061333,
+            "predicted_n": 10,
+            "predicted_ms": 433.054,
+            "predicted_per_token_ms": 43.3054,
+            "predicted_per_second": 23.09180841188397,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.330564667994622,
+          "final_wall_seconds": 1.9382377529982477
+        },
+        {
+          "turn": 5,
+          "order_id": "ORD-1005",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1005"
+          },
+          "expected": "STATUS=processing; ETA=6h",
+          "actual": "STATUS=processing; ETA=6h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 18961,
+            "prompt_n": 103,
+            "prompt_ms": 779.429,
+            "prompt_per_token_ms": 7.567271844660194,
+            "prompt_per_second": 132.14802117960713,
+            "predicted_n": 33,
+            "predicted_ms": 866.489,
+            "predicted_per_token_ms": 26.257242424242424,
+            "predicted_per_second": 38.08473044666464,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 18784,
+            "prompt_n": 122,
+            "prompt_ms": 752.408,
+            "prompt_per_token_ms": 6.167278688524591,
+            "prompt_per_second": 162.1460696855961,
+            "predicted_n": 9,
+            "predicted_ms": 220.051,
+            "predicted_per_token_ms": 24.45011111111111,
+            "predicted_per_second": 40.89960963594804,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 2.377880956977606,
+          "final_wall_seconds": 1.70793292298913
+        },
+        {
+          "turn": 6,
+          "order_id": "ORD-1006",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1006"
+          },
+          "expected": "STATUS=shipped; ETA=2d",
+          "actual": "STATUS=shipped; ETA=2d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19096,
+            "prompt_n": 100,
+            "prompt_ms": 772.002,
+            "prompt_per_token_ms": 7.72002,
+            "prompt_per_second": 129.5333431778674,
+            "predicted_n": 33,
+            "predicted_ms": 865.775,
+            "predicted_per_token_ms": 26.23560606060606,
+            "predicted_per_second": 38.116138719644255,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 18914,
+            "prompt_n": 126,
+            "prompt_ms": 755.422,
+            "prompt_per_token_ms": 5.995412698412698,
+            "prompt_per_second": 166.79418920815118,
+            "predicted_n": 10,
+            "predicted_ms": 433.895,
+            "predicted_per_token_ms": 43.3895,
+            "predicted_per_second": 23.04705055370539,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.3921962740132585,
+          "final_wall_seconds": 1.9154158380115405
+        },
+        {
+          "turn": 7,
+          "order_id": "ORD-1007",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1007"
+          },
+          "expected": "STATUS=packed; ETA=4h",
+          "actual": "STATUS=packed; ETA=4h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19228,
+            "prompt_n": 103,
+            "prompt_ms": 780.84,
+            "prompt_per_token_ms": 7.580970873786408,
+            "prompt_per_second": 131.90922596178476,
+            "predicted_n": 33,
+            "predicted_ms": 871.36,
+            "predicted_per_token_ms": 26.404848484848486,
+            "predicted_per_second": 37.871832537642305,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19051,
+            "prompt_n": 122,
+            "prompt_ms": 773.101,
+            "prompt_per_token_ms": 6.336893442622951,
+            "prompt_per_second": 157.8060305186515,
+            "predicted_n": 9,
+            "predicted_ms": 222.328,
+            "predicted_per_token_ms": 24.703111111111113,
+            "predicted_per_second": 40.48073117196215,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 2.431068824022077,
+          "final_wall_seconds": 1.727224792004563
+        },
+        {
+          "turn": 8,
+          "order_id": "ORD-1008",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1008"
+          },
+          "expected": "STATUS=delayed; ETA=5d",
+          "actual": "STATUS=delayed; ETA=5d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19363,
+            "prompt_n": 100,
+            "prompt_ms": 741.245,
+            "prompt_per_token_ms": 7.41245,
+            "prompt_per_second": 134.90816126921598,
+            "predicted_n": 33,
+            "predicted_ms": 871.818,
+            "predicted_per_token_ms": 26.41872727272727,
+            "predicted_per_second": 37.85193698684817,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19181,
+            "prompt_n": 126,
+            "prompt_ms": 766.799,
+            "prompt_per_token_ms": 6.085706349206349,
+            "prompt_per_second": 164.31946311875734,
+            "predicted_n": 10,
+            "predicted_ms": 435.575,
+            "predicted_per_token_ms": 43.5575,
+            "predicted_per_second": 22.958158755667796,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.333197513013147,
+          "final_wall_seconds": 1.9325294640148059
+        },
+        {
+          "turn": 9,
+          "order_id": "ORD-1009",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1009"
+          },
+          "expected": "STATUS=delivered; ETA=0h",
+          "actual": "STATUS=delivered; ETA=0h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19495,
+            "prompt_n": 103,
+            "prompt_ms": 733.535,
+            "prompt_per_token_ms": 7.121699029126213,
+            "prompt_per_second": 140.41593107350025,
+            "predicted_n": 33,
+            "predicted_ms": 848.754,
+            "predicted_per_token_ms": 25.719818181818184,
+            "predicted_per_second": 38.88052368530811,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19318,
+            "prompt_n": 124,
+            "prompt_ms": 749.192,
+            "prompt_per_token_ms": 6.041870967741936,
+            "prompt_per_second": 165.51164454505655,
+            "predicted_n": 10,
+            "predicted_ms": 437.467,
+            "predicted_per_token_ms": 43.7467,
+            "predicted_per_second": 22.858867068830335,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.264238799980376,
+          "final_wall_seconds": 1.9385720820282586
+        },
+        {
+          "turn": 10,
+          "order_id": "ORD-1010",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1010"
+          },
+          "expected": "STATUS=processing; ETA=8h",
+          "actual": "STATUS=processing; ETA=8h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19630,
+            "prompt_n": 103,
+            "prompt_ms": 746.499,
+            "prompt_per_token_ms": 7.247563106796116,
+            "prompt_per_second": 137.97741189204538,
+            "predicted_n": 33,
+            "predicted_ms": 868.517,
+            "predicted_per_token_ms": 26.318696969696973,
+            "predicted_per_second": 37.995802039568595,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19453,
+            "prompt_n": 122,
+            "prompt_ms": 768.904,
+            "prompt_per_token_ms": 6.302491803278689,
+            "prompt_per_second": 158.66740191233237,
+            "predicted_n": 9,
+            "predicted_ms": 213.355,
+            "predicted_per_token_ms": 23.70611111111111,
+            "predicted_per_second": 42.18321576714865,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 2.29406517802272,
+          "final_wall_seconds": 1.717036463029217
+        },
+        {
+          "turn": 11,
+          "order_id": "ORD-1011",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1011"
+          },
+          "expected": "STATUS=shipped; ETA=1d",
+          "actual": "STATUS=shipped; ETA=1d",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19765,
+            "prompt_n": 100,
+            "prompt_ms": 737.555,
+            "prompt_per_token_ms": 7.37555,
+            "prompt_per_second": 135.58310905627377,
+            "predicted_n": 33,
+            "predicted_ms": 874.127,
+            "predicted_per_token_ms": 26.488696969696967,
+            "predicted_per_second": 37.751951375486634,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19583,
+            "prompt_n": 126,
+            "prompt_ms": 785.423,
+            "prompt_per_token_ms": 6.233515873015873,
+            "prompt_per_second": 160.42310958553543,
+            "predicted_n": 10,
+            "predicted_ms": 434.409,
+            "predicted_per_token_ms": 43.4409,
+            "predicted_per_second": 23.019780897725415,
+            "draft_n": 14,
+            "draft_n_accepted": 9
+          },
+          "tool_wall_seconds": 2.283075949002523,
+          "final_wall_seconds": 1.989009176963009
+        },
+        {
+          "turn": 12,
+          "order_id": "ORD-1012",
+          "tool_ok": true,
+          "arguments": {
+            "order_id": "ORD-1012"
+          },
+          "expected": "STATUS=packed; ETA=3h",
+          "actual": "STATUS=packed; ETA=3h",
+          "final_ok": true,
+          "tool_timings": {
+            "cache_n": 19897,
+            "prompt_n": 103,
+            "prompt_ms": 748.244,
+            "prompt_per_token_ms": 7.264504854368933,
+            "prompt_per_second": 137.65563105083368,
+            "predicted_n": 33,
+            "predicted_ms": 863.449,
+            "predicted_per_token_ms": 26.16512121212121,
+            "predicted_per_second": 38.21881778773269,
+            "draft_n": 28,
+            "draft_n_accepted": 28
+          },
+          "final_timings": {
+            "cache_n": 19720,
+            "prompt_n": 122,
+            "prompt_ms": 759.421,
+            "prompt_per_token_ms": 6.224762295081968,
+            "prompt_per_second": 160.64870473689822,
+            "predicted_n": 9,
+            "predicted_ms": 224.061,
+            "predicted_per_token_ms": 24.895666666666667,
+            "predicted_per_second": 40.167632921391935,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          },
+          "tool_wall_seconds": 2.3152616580482572,
+          "final_wall_seconds": 1.7446708719944581
+        }
+      ],
+      "quality_passed": 12,
+      "quality_total": 12,
+      "prompt_tokens_evaluated": 39381,
+      "prompt_seconds": 72.110633,
+      "prompt_tokens_per_second": 546.1191832832752,
+      "generated_tokens": 511,
+      "decode_seconds": 14.55103,
+      "decode_tokens_per_second": 35.11778891253746,
+      "draft_generated": 469,
+      "draft_accepted": 434,
+      "draft_acceptance": 0.9253731343283582,
+      "wall_seconds": 103.09533937106607
+    }
+  },
+  "comparison": {
+    "wall_speedup": 7.127800559578066,
+    "prompt_time_reduction": 0.8974498280034255,
+    "quality_equal": true
+  },
+  "completed_at_utc": "2026-08-20T04:20:58Z"
+}

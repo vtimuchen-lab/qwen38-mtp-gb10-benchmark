@@ -1,0 +1,30 @@
+{
+  "seed": 42,
+  "mmlu_pro": {
+    "source": "TIGER-Lab/MMLU-Pro",
+    "revision": "datasets-server snapshot fetched 2026-08-17",
+    "test_total": 12032,
+    "validation_total": 70,
+    "sample": 100,
+    "sampling": "category-stratified"
+  },
+  "gsm8k": {
+    "source": "openai/gsm8k",
+    "config": "main",
+    "test_total": 1319,
+    "train_total": 7473,
+    "sample": 100,
+    "shots": 8
+  },
+  "humaneval": {
+    "source": "openai/human-eval",
+    "revision": "cloned 2026-08-17",
+    "sample": 40
+  },
+  "ifeval": {
+    "source": "google-research/instruction_following_eval",
+    "revision": "cloned 2026-08-17",
+    "total": 541,
+    "sample": 50
+  }
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.log
+*.gguf
+*.tar
+*.tar.gz
+.env
+venv/
+.venv/
