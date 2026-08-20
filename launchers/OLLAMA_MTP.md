@@ -33,13 +33,13 @@ Normal Ollama shell commands such as `/clear`, `/set`, `/?`, and `/bye` remain a
 ## One-shot prompt
 
 ```bash
-ollama run qwen3.8-MTP:27b "Ответь кратко: что такое MTP?"
+ollama run qwen3.8-MTP:27b "Briefly explain what MTP is."
 ```
 
 Verbose timing:
 
 ```bash
-ollama-mtp run qwen3.8-MTP:27b --verbose "Ответь одним словом: ГОТОВО"
+ollama-mtp run qwen3.8-MTP:27b --verbose "Return exactly one word: READY"
 ```
 
 ## Implementation
@@ -47,7 +47,7 @@ ollama-mtp run qwen3.8-MTP:27b --verbose "Ответь одним словом: 
 - Ollama-compatible API: `127.0.0.1:11435`
 - llama.cpp backend: `127.0.0.1:18080`
 - Context: 65,536 tokens
-- MTP: `--spec-type draft-mtp --spec-draft-n-max 10` (эксплуатационный компромисс по sweep-тесту: 37,01 tok/s, 4,03× к baseline, acceptance 87,98%, минимальный результат 25,62 tok/s, объективная и семантическая корректность 9/9)
+- MTP: `--spec-type draft-mtp --spec-draft-n-max 10` (operational compromise from the depth sweep: 37.01 tok/s, 4.03x baseline, 87.98% acceptance, a 25.62 tok/s minimum case, and 9/9 objective and semantic checks)
 - Q6 bridge/API: `127.0.0.1:11436`, llama.cpp backend: `127.0.0.1:18081`
 - Clean content parsing: `--reasoning-format deepseek`
 - Both services bind only to localhost and automatically stop after `/bye`.
