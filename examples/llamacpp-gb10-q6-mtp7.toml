@@ -1,0 +1,69 @@
+# Qwen3.8-27B UD-Q6_K_XL on llama.cpp with MTP7 — the exact configuration of
+# the published results/q6.json run (run_benchmark.py --quant q6).
+#
+# Every machine-specific value lives here. Copy this file and edit the paths
+# for another host; keep [model]/[request]/[parameters]/[runtime] identical if
+# you want `compare-hosts` to treat the two runs as the same workload.
+#
+#   python -m sparkbench run --config examples/llamacpp-gb10-q6-mtp7.toml
+#
+# Relative paths are resolved from the current directory (the repo root).
+
+[run]
+label = "q6-mtp7"
+quant = "q6"
+output = "results/runs/q6-mtp7.json"
+# suites = ["mmlu_pro", "gsm8k", "humaneval", "ifeval", "long_context", "tools", "stability_100"]
+
+[model]
+name = "qwen3.8-MTP:27b-q6"   # model id sent in requests (llama-server --alias)
+file = "/usr/share/ollama/.ollama/models/blobs/sha256-739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8"
+sha256 = "739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8"
+quantization = "UD-Q6_K_XL"
+source = "unsloth/Qwen3.8-27B-GGUF"
+
+[runtime]
+name = "llama.cpp"
+version = "d2f83055d6e3b379b5d34c4837122a918cf402c2"
+binary = "/home/admin/llama.cpp-main-20260810/build/bin/llama-server"
+
+[backend]
+base_url = "http://127.0.0.1:18084"
+tokenizer = "llama.cpp"            # POST /tokenize {"content": ...}
+extra_body = { cache_prompt = false }
+
+# Optional: let sparkbench start and stop the server. Omit [server] to use an
+# already running server at base_url.
+[server]
+command = [
+  "/home/admin/llama.cpp-main-20260810/build/bin/llama-server",
+  "--model", "/usr/share/ollama/.ollama/models/blobs/sha256-739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+  "--alias", "qwen3.8-MTP:27b-q6",
+  "--host", "127.0.0.1", "--port", "18084", "--no-webui", "--offline",
+  "--ctx-size", "65536", "--parallel", "1", "--gpu-layers", "all",
+  "--fit", "off", "--flash-attn", "on", "--cache-type-k", "q8_0",
+  "--cache-type-v", "q8_0", "--batch-size", "2048", "--ubatch-size", "2048",
+  "--jinja", "--reasoning", "off", "--reasoning-budget", "0",
+  "--reasoning-format", "deepseek",
+  "--spec-type", "draft-mtp", "--spec-draft-n-max", "7", "--spec-draft-ngl", "all",
+  "--log-verbosity", "2",
+]
+ready_timeout = 600
+
+[request]
+temperature = 0
+seed = 42
+
+# Recorded verbatim in the result; describe the server flags that matter.
+[parameters]
+mtp_depth = 7
+context = 65536
+parallel = 1
+kv_k = "q8_0"
+kv_v = "q8_0"
+
+[data]
+nltk_data = "/home/admin/.local/share/qwen38-nltk-data"
+# dir = "data"                                          # fetch_data.py output
+# humaneval = "vendor/human-eval/data/HumanEval.jsonl.gz"
+# ifeval_lib = "vendor/google-research"

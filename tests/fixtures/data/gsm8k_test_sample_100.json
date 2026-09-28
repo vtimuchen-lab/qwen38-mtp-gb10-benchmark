@@ -1,0 +1,14 @@
+[
+ {
+  "question": "Tom has 3 apples and buys 4 more. How many apples does he have?",
+  "answer": "3 + 4 = <<3+4=7>>7\n#### 7"
+ },
+ {
+  "question": "A book costs $12 and a pen costs $3. What do 2 books and 1 pen cost?",
+  "answer": "2*12+3 = <<2*12+3=27>>27\n#### 27"
+ },
+ {
+  "question": "Sara ran 1,200 meters on Monday and 800 on Tuesday. How far in total?",
+  "answer": "1200+800=2000\n#### 2,000"
+ }
+]

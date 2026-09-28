@@ -1,0 +1,36 @@
+[
+ {
+  "question_id": 1,
+  "question": "H2O is commonly called?",
+  "options": [
+   "Salt",
+   "Water"
+  ],
+  "answer": "B",
+  "category": "chemistry",
+  "cot_content": "A: Let's think step by step. H2O is water. The answer is (B)."
+ },
+ {
+  "question_id": 2,
+  "question": "2 + 2 = ?",
+  "options": [
+   "3",
+   "4",
+   "5"
+  ],
+  "answer": "B",
+  "category": "math",
+  "cot_content": "A: Let's think step by step. 2 + 2 = 4."
+ },
+ {
+  "question_id": 3,
+  "question": "10 / 2 = ?",
+  "options": [
+   "5",
+   "2"
+  ],
+  "answer": "A",
+  "category": "math",
+  "cot_content": ""
+ }
+]

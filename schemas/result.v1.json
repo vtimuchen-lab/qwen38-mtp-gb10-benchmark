@@ -1,0 +1,755 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vtimuchen-lab/qwen38-mtp-gb10-benchmark/schemas/result.v1.json",
+  "title": "sparkbench.result.v1",
+  "description": "One benchmark run (one model/quant/runtime configuration on one host). Based on the legacy results/q4.json layout (schema, quant, model, runtime, parameters, suites, timings) plus host, backend, config hash and uniform per-case records.",
+  "type": "object",
+  "required": [
+    "schema",
+    "label",
+    "quant",
+    "model",
+    "runtime",
+    "backend",
+    "host",
+    "parameters",
+    "config_sha256",
+    "source",
+    "timings",
+    "smoke",
+    "complete",
+    "suites",
+    "overall"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "sparkbench.result.v1"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short human label used in reports."
+    },
+    "quant": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Model id sent in requests (server alias)."
+        },
+        "file": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quantization": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "binary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reported_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "backend": {
+      "type": "object",
+      "required": [
+        "kind",
+        "base_url",
+        "api",
+        "managed_server"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "enum": [
+            "openai"
+          ]
+        },
+        "base_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "api": {
+          "type": "string"
+        },
+        "managed_server": {
+          "type": "boolean"
+        },
+        "tokenizer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extra_body": {
+          "type": "object"
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "required": [
+        "name",
+        "gpu",
+        "driver"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gpu": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "driver": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arch": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kernel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "os": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cpus": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object"
+        }
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Run parameters (sampling, runtime flags such as mtp_depth/context) recorded verbatim."
+    },
+    "config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "workload_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "config": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Parsed TOML config (or reconstructed legacy config for imports)."
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "kind",
+        "tool"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "enum": [
+            "run",
+            "import"
+          ]
+        },
+        "tool": {
+          "type": "string"
+        },
+        "importer": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "timings": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "started_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completed_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "server_load_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wall_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "smoke": {
+      "type": "boolean"
+    },
+    "complete": {
+      "type": "boolean"
+    },
+    "suites": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/suite"
+      }
+    },
+    "overall": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/overall"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "extra": {
+      "type": "object",
+      "description": "Importer- or series-specific metadata that has no v1 field (e.g. sweep winner, soak summary)."
+    }
+  },
+  "$defs": {
+    "aggregate": {
+      "type": "object",
+      "required": [
+        "cases",
+        "prompt_tokens",
+        "prompt_tokens_per_second",
+        "generated_tokens",
+        "decode_tokens_per_second",
+        "median_case_decode_tokens_per_second",
+        "wall_seconds",
+        "draft_generated",
+        "draft_accepted",
+        "draft_acceptance"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prompt_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prompt_tokens_per_second": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "generated_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decode_tokens_per_second": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "median_case_decode_tokens_per_second": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wall_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "draft_generated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_accepted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_acceptance": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "overall": {
+      "type": "object",
+      "required": [
+        "cases",
+        "api_calls",
+        "prompt_tokens",
+        "generated_tokens",
+        "decode_tokens_per_second",
+        "draft_generated",
+        "draft_accepted",
+        "draft_acceptance"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "api_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prompt_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generated_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decode_tokens_per_second": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wall_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "draft_generated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_accepted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_acceptance": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "suite": {
+      "type": "object",
+      "required": [
+        "description",
+        "complete",
+        "quality",
+        "quality_label",
+        "verdicts",
+        "metrics",
+        "aggregate",
+        "timing_source",
+        "cases"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "quality": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "quality_label": {
+          "type": "string"
+        },
+        "verdicts": {
+          "type": "object",
+          "required": [
+            "pass",
+            "fail",
+            "error",
+            "unscored"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "pass": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fail": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "error": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unscored": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "metrics": {
+          "type": "object"
+        },
+        "aggregate": {
+          "$ref": "#/$defs/aggregate"
+        },
+        "timing_source": {
+          "enum": [
+            "server",
+            "wall",
+            "mixed"
+          ]
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/case"
+          }
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": [
+        "id",
+        "verdict",
+        "prompt_sha256",
+        "api_calls",
+        "tokens",
+        "time",
+        "tok_s",
+        "timing_source",
+        "finish_reason",
+        "content",
+        "content_sha256"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "error",
+            "unscored"
+          ]
+        },
+        "prompt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "api_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens": {
+          "type": "object",
+          "required": [
+            "prompt",
+            "generated",
+            "draft_generated",
+            "draft_accepted"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "prompt": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "generated": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "draft_generated": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "draft_accepted": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        },
+        "time": {
+          "type": "object",
+          "required": [
+            "wall_seconds",
+            "prompt_ms",
+            "decode_ms"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "wall_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "prompt_ms": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "decode_ms": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "tok_s": {
+          "type": "object",
+          "required": [
+            "prompt",
+            "decode"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "prompt": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "decode": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "timing_source": {
+          "enum": [
+            "server",
+            "wall"
+          ]
+        },
+        "finish_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "content": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool_calls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "arguments"
+            ],
+            "properties": {
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "transcript": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Outputs of earlier API calls of a multi-call case (e.g. MMLU-Pro reasoning stage)."
+        },
+        "expected": {},
+        "predicted": {},
+        "error": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "description": "Suite-specific extra fields."
+        }
+      }
+    }
+  }
+}

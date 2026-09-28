@@ -1,0 +1,1710 @@
+{
+  "schema": "sparkbench.result.v1",
+  "label": "complex-q4-mtp11",
+  "quant": "q4",
+  "model": {
+    "name": "qwen3.8-MTP:27b",
+    "file": null,
+    "sha256": "bee238bbeb3dc0a34bde4d0dedbaee1f98c009e8bb4226f03070054c12fb1372",
+    "quantization": "UD-Q4_K_XL",
+    "source": "unsloth/Qwen3.8-27B-GGUF"
+  },
+  "runtime": {
+    "name": "llama.cpp",
+    "version": "d2f83055d6e3b379b5d34c4837122a918cf402c2",
+    "binary": null
+  },
+  "backend": {
+    "kind": "openai",
+    "base_url": "http://127.0.0.1:18084",
+    "api": "/v1/chat/completions",
+    "managed_server": true,
+    "tokenizer": "llama.cpp",
+    "extra_body": {
+      "cache_prompt": false
+    }
+  },
+  "host": {
+    "name": null,
+    "gpu": "NVIDIA GB10",
+    "driver": "580.173.02",
+    "arch": "aarch64",
+    "kernel": "6.17.0-1029-nvidia",
+    "os": null,
+    "cpus": 20,
+    "source": "README.md 'Test system' table (legacy import; hostname was not recorded)"
+  },
+  "parameters": {
+    "mtp_depth": 11,
+    "temperature": 0,
+    "seed": 42,
+    "context": 65536,
+    "parallel": 1,
+    "kv_k": "q8_0",
+    "kv_v": "q8_0"
+  },
+  "config_sha256": "284d0e7e91fdfb97c69097a4eabb2f54e2e025fa942684c5411b6b16df5e7ec9",
+  "workload_sha256": "e2ec4c09355ecf00884022d6951585a6e13b7499b19aeb6152fa5dcbe9683cdd",
+  "config": {
+    "run": {
+      "label": "complex-q4-mtp11",
+      "quant": "q4"
+    },
+    "model": {
+      "name": "qwen3.8-MTP:27b",
+      "file": null,
+      "sha256": "bee238bbeb3dc0a34bde4d0dedbaee1f98c009e8bb4226f03070054c12fb1372",
+      "quantization": "UD-Q4_K_XL",
+      "source": "unsloth/Qwen3.8-27B-GGUF"
+    },
+    "runtime": {
+      "name": "llama.cpp"
+    },
+    "backend": {
+      "base_url": "http://127.0.0.1:18084",
+      "tokenizer": "llama.cpp",
+      "extra_body": {
+        "cache_prompt": false
+      }
+    },
+    "server": {
+      "command": [
+        "llama-server",
+        "--alias",
+        "qwen3.8-MTP:27b",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "18084",
+        "--no-webui",
+        "--offline",
+        "--ctx-size",
+        "65536",
+        "--parallel",
+        "1",
+        "--gpu-layers",
+        "all",
+        "--fit",
+        "off",
+        "--flash-attn",
+        "on",
+        "--cache-type-k",
+        "q8_0",
+        "--cache-type-v",
+        "q8_0",
+        "--batch-size",
+        "2048",
+        "--ubatch-size",
+        "2048",
+        "--jinja",
+        "--reasoning",
+        "off",
+        "--reasoning-budget",
+        "0",
+        "--reasoning-format",
+        "deepseek",
+        "--spec-type",
+        "draft-mtp",
+        "--spec-draft-n-max",
+        "11",
+        "--spec-draft-ngl",
+        "all",
+        "--log-verbosity",
+        "2"
+      ]
+    },
+    "request": {
+      "temperature": 0,
+      "seed": 42
+    },
+    "parameters": {
+      "mtp_depth": 11,
+      "context": 65536,
+      "parallel": 1,
+      "kv_k": "q8_0",
+      "kv_v": "q8_0"
+    },
+    "workload": "complex_mini_sweep"
+  },
+  "source": {
+    "tool": "sparkbench 1.0.0",
+    "kind": "import",
+    "importer": "extended",
+    "files": [
+      {
+        "path": "extended_validation/complex_results.json",
+        "sha256": "d8246cd9c7ff88f5f0e093e1116c276264c16f35e1598ddc8d3f6eacef1ecb91"
+      }
+    ],
+    "notes": [
+      "mode mtp11 of the mixed IFEval/GSM8K/tool/chat mini-sweep (Qwen3.8-27B UD-Q4_K_XL)"
+    ]
+  },
+  "timings": {
+    "started_at_utc": "2026-08-20T02:34:26Z",
+    "completed_at_utc": "2026-08-20T04:06:06Z",
+    "server_load_seconds": 10.256921758002136,
+    "wall_seconds": 413.3115906181629
+  },
+  "smoke": false,
+  "complete": true,
+  "suites": {
+    "mini_ifeval": {
+      "description": "Mixed mini-sweep: first 10 IFEval prompts of the 50-prompt sample, official strict/loose scorer",
+      "complete": true,
+      "quality": 0.9,
+      "quality_label": "strict prompt",
+      "verdicts": {
+        "pass": 9,
+        "fail": 1,
+        "error": 0,
+        "unscored": 0
+      },
+      "metrics": {
+        "strict": {
+          "prompt_level": 0.9,
+          "instruction_level": 0.9285714285714286,
+          "prompt_correct": 9,
+          "prompt_total": 10,
+          "instruction_correct": 13,
+          "instruction_total": 14
+        },
+        "loose": {
+          "prompt_level": 0.9,
+          "instruction_level": 0.9285714285714286,
+          "prompt_correct": 9,
+          "prompt_total": 10,
+          "instruction_correct": 13,
+          "instruction_total": 14
+        }
+      },
+      "aggregate": {
+        "cases": 10,
+        "prompt_tokens": 581,
+        "prompt_tokens_per_second": 171.73735240120448,
+        "generated_tokens": 2798,
+        "decode_tokens_per_second": 11.637692721522441,
+        "median_case_decode_tokens_per_second": 11.466020634079694,
+        "wall_seconds": 244.57484683510847,
+        "draft_generated": 11246,
+        "draft_accepted": 1791,
+        "draft_acceptance": 0.1592566245776276
+      },
+      "timing_source": "server",
+      "cases": [
+        {
+          "id": "1620",
+          "verdict": "pass",
+          "prompt_sha256": "b83911ede594107c388f205fd3b9d395333e70f9648fb7c9e89d888c8d864d9e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 51,
+            "generated": 206,
+            "draft_generated": 836,
+            "draft_accepted": 133
+          },
+          "time": {
+            "wall_seconds": 18.217882981989533,
+            "prompt_ms": 334.087,
+            "decode_ms": 17810.144
+          },
+          "tok_s": {
+            "prompt": 152.6548473900511,
+            "decode": 11.566442135448202
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Subject: You have to check out this album!\n\nHi Luheng,\n\nI hope you’re having a great week!\n\nI’ve been on a bit of a musical journey lately, and I just had to share one of my absolute favorite finds with you. I recently discovered an album called *Lilith*, and I think you’re going to love it.\n\nIt’s got this incredible vibe that I feel really resonates with your taste—think atmospheric, deep, and really immersive. I’ve been listening to it on repeat, and it’s the kind of record that just sticks with you. If you have some free time this weekend, I’d love to hear what you think after you give it a listen.\n\nLet me know if you want me to send you a link or if you’d prefer to borrow a copy!\n\nBest,\n\n[Your Name]\n\nP.S. If you end up liking it, let me know! I’m always looking for new recommendations to add to my rotation.",
+          "content_sha256": "cae2430fa50a31984fa15888b2b51b7465a57409704ff61701bc31e19b4dff73",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        },
+        {
+          "id": "1132",
+          "verdict": "pass",
+          "prompt_sha256": "4410badd2e76d115b8b5461dc4217dd079b4cf90c81bd2eea9abf8bb2e1f6196",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 59,
+            "generated": 308,
+            "draft_generated": 1298,
+            "draft_accepted": 193
+          },
+          "time": {
+            "wall_seconds": 28.143057415029034,
+            "prompt_ms": 339.035,
+            "decode_ms": 27730.37
+          },
+          "tok_s": {
+            "prompt": 174.0233309245358,
+            "decode": 11.106956019699702
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "STOMP YOUR FEET ON THE CONCRETE FLOOR\nSHOUT IT OUT UNTIL YOU CAN'T BREATHE NO MORE\nTHE LIGHTNING STRIKES THE SKY ABOVE\nWE ARE THE ONES WHO NEVER GAVE UP THE LOVE\n\nCRANK THE VOLUME TILL THE GLASS SHATTERS DOWN\nWEAR THE SCARS AND CROWN THE SOUND\nNO ANGELS HERE, JUST DIRT AND DUST\nPUT YOUR HEART ON THE LINE, BET IT ALL ON TRUST\n\nRISE UP!\nRISE UP!\nBURN THE BRIDGES BEHIND\nLEAVE THE WEAKNESS BEHIND\n\nRISE UP!\nRISE UP!\nLET THE THUNDER ROAR\nWE ARE THE STORM, WE ARE THE WAR\n\nDON'T LOOK BACK AT THE ROAD YOU LEFT\nTHE FIRE IS BURNING, THE PAIN IS DEPT\nGRIP THE WHEEL AND HOLD ON TIGHT\nTODAY WE FIGHT, TONIGHT WE FIGHT\n\nRISE UP!\nRISE UP!\nBURN THE BRIDGES BEHIND\nLEAVE THE WEAKNESS BEHIND\n\nRISE UP!\nRISE UP!\nLET THE THUNDER ROAR\nWE ARE THE STORM, WE ARE THE WAR\n\nFADE OUT INTO THE SILENCE\nBUT THE ECHO STAYS FOREVER\nTHE GIFTED AND THE NOT GIFTED\nTOGETHER WE ARE NEVER",
+          "content_sha256": "79480fa44cbd524c4acafb7af398cd012aa2f700b1e266e25ca9e7aab80d7e56",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true,
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "2465",
+          "verdict": "pass",
+          "prompt_sha256": "3564f5b0ceb72a44ebfa08c299adf9155985bc070dfd288661b4d908f2e00d0b",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 111,
+            "generated": 63,
+            "draft_generated": 121,
+            "draft_accepted": 55
+          },
+          "time": {
+            "wall_seconds": 3.042982252954971,
+            "prompt_ms": 371.48,
+            "decode_ms": 2598.756
+          },
+          "tok_s": {
+            "prompt": 298.80478087649396,
+            "decode": 24.242368271588408
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "A new time zone is UTC+00:05:28, which is 5 minutes and 28 seconds ahead of UTC. Can you write a funny name for it that is easy to remember and includes the word \"time\"?\n\n**The \"Five-Minute Late\" Time**",
+          "content_sha256": "c6ce977e191e34b0ccdf208908a0ba39193cb1ecb61705ce8a33ed7652ff67ce",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        },
+        {
+          "id": "2341",
+          "verdict": "pass",
+          "prompt_sha256": "12358d1afa2e0c3223bd5d338c364ca98ad4ca6829785fe020eee82161f56bf3",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 34,
+            "generated": 58,
+            "draft_generated": 187,
+            "draft_accepted": 44
+          },
+          "time": {
+            "wall_seconds": 4.393605220015161,
+            "prompt_ms": 318.703,
+            "decode_ms": 4003.838
+          },
+          "tok_s": {
+            "prompt": 106.68239709070829,
+            "decode": 14.486100586487265
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "YES, PRAYING FOR SOMEONE'S HEALTH IS GENERALLY CONSIDERED A GOOD IDEA AS IT CAN PROVIDE EMOTIONAL SUPPORT, HOPE, AND A SENSE OF COMMUNITY FOR BOTH THE PERSON PRAYING AND THE PERSON BEING PRAYED FOR.",
+          "content_sha256": "c8c67bdc2c54e4715c3305ef7c11cf285a7f41ebf1d625bb1587c38a0bc8e604",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        },
+        {
+          "id": "2247",
+          "verdict": "pass",
+          "prompt_sha256": "0edaf00756104c4d01a7ef2bfa7a00c5f3b23aeed91cd536869811fe1e82607a",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 31,
+            "generated": 680,
+            "draft_generated": 2805,
+            "draft_accepted": 428
+          },
+          "time": {
+            "wall_seconds": 60.212626237014774,
+            "prompt_ms": 307.376,
+            "decode_ms": 59829.666
+          },
+          "tok_s": {
+            "prompt": 100.85367758055281,
+            "decode": 11.365599132711187
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "ALVIN AND THE CHIPMUNKS IS A CULTURAL PHENOMENON THAT HAS CAPTURED THE IMAGINATION OF AUDIENCES ACROSS GENERATIONS. ORIGINALLY DEBUTING IN 1958 AS AN ANIMATED TELEVISION SERIES, THE FRANCHISE HAS EVOLVED THROUGH MULTIPLE REBOOTS, MOVIES, AND MERCHANDISE LINES, ENSURING ITS PLACE IN POPULAR CULTURE. THE STORY CENTERS ON THREE ANTHROPOMORPHIC CHIPMUNKS—ALVIN, SIMON, AND THEODORE—WHO ARE ADOPTED BY THEIR HUMAN GUARDIAN, DAVID SEVILLE. EACH BROTHER POSSESSES A DISTINCT PERSONALITY THAT SERVES AS THE FOUNDATION FOR THE SHOW'S COMEDIC DYNAMICS.\n\nALVIN, THE ELDEST, IS CHARACTERIZED BY HIS MISCHIEVOUS AND RECKLESS BEHAVIOR. HE OFTEN FINDS HIMSELF IN TROUBLE DUE TO HIS IMPULSE CONTROL ISSUES AND DESIRE FOR ATTENTION. IN CONTRAST, SIMON, THE MIDDLE BROTHER, IS THE INTELLECTUAL OF THE GROUP. HE IS CALM, LOGICAL, AND OFTEN SERVES AS THE VOICE OF REASON, ALTHOUGH HE CAN BECOME FRUSTRATED BY HIS BROTHERS' CHAOS. THEODORE, THE YOUNGEST, IS THE MOST GENTLE AND EMPATHETIC, OFTEN ACTING AS THE MORAL COMPASS FOR THE TRIO. TOGETHER, THEY BALANCE EACH OTHER'S FLAWS AND STRENGTHS, CREATING A DYNAMIC THAT RESONATES WITH VIEWERS.\n\nTHE FRANCHISE IS NOTED FOR ITS UNIQUE USE OF VOCAL EFFECTS, WHERE THE CHIPMUNKS SPEAK IN HIGH-PITCHED VOICES. THIS DISTINCTIVE AUDIO SIGNATURE HAS BECOME ICONIC AND IS IMMEDIATELY RECOGNIZABLE. OVER THE DECADES, THE CHARACTERS HAVE ADAPTED TO CHANGING SOCIAL NORMS AND TECHNOLOGICAL ADVANCEMENTS, KEEPING THE STORY RELEVANT FOR NEW AUDIENCES. THE 2007 LIVE-ACTION MOVIE AND ITS SEQUELS FURTHER EXPANDED THE FRANCHISE'S REACH, INTRODUCING THE CHIPMUNKS TO A WIDER GLOBAL MARKET.\n\nBEYOND ENTERTAINMENT, ALVIN AND THE CHIPMUNKS HAVE LEFT A LASTING IMPACT ON MERCHANDISING AND MUSIC. THEIR SONGS, SUCH AS \"CUT THE GEEZER\" AND \"I LIKE THE WAY YOU KISS ME,\" HAVE BECOME POP CULTURE REFERENCES. THE FRANCHISE DEMONSTRATES THE POWER OF CHARACTERS THAT EMBODY UNIVERSAL THEMES OF FAMILY, RESPONSIBILITY, AND GROWTH. DESPITE THEIR SMALL SIZE, THESE THREE CHIPMUNKS HAVE MADE A HUGE IMPACT, PROVING THAT EVEN THE SMALLEST VOICES CAN BE THE LOUDEST IN THE ROOM. TODAY, THEY REMAIN A STAPLE OF CHILDREN'S ENTERTAINMENT, CONTINUING TO BRING JOY AND LAUGHTER TO FAMILIES EVERYWHERE.",
+          "content_sha256": "d42f009e65d8251f48638ad4161930a958414001de391baf9789c4a90be4c798",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        },
+        {
+          "id": "1759",
+          "verdict": "fail",
+          "prompt_sha256": "a3c6183ed05bd915be94570ced901aa20f6de96b0a38e06a807af49381d35c67",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 38,
+            "generated": 768,
+            "draft_generated": 2677,
+            "draft_accepted": 521
+          },
+          "time": {
+            "wall_seconds": 58.01677066303091,
+            "prompt_ms": 333.316,
+            "decode_ms": 57606.481
+          },
+          "tok_s": {
+            "prompt": 114.00592830827203,
+            "decode": 13.331833270634947
+          },
+          "timing_source": "server",
+          "finish_reason": "length",
+          "content": "Writing a good Chinese poem is an art form that blends linguistic precision, cultural depth, and emotional resonance. Whether you are aiming for the classical **Jueju** (quatrains) or **Lüshi** (regulated verse), or exploring modern free verse, the core principles remain rooted in imagery, rhythm, and conciseness.\n\nHere is a guide to crafting a compelling Chinese poem:\n\n### 1. Master the Imagery (Yi)\nChinese poetry is often described as \"painting with words.\" Instead of stating emotions directly, use concrete images to evoke feelings.\n- **Show, don’t tell**: Instead of saying \"I am sad,\" describe a \"withered lotus in a cold pond\" or \"a lone bird flying into the sunset.\"\n- **Use traditional symbols**: Familiar motifs like the moon (longing), willows (parting), cranes (longevity), or plum blossoms (resilience) carry deep cultural weight.\n\n### 2. Embrace Conciseness (Jian)\nClassical Chinese poetry is highly compressed. Every character must earn its place.\n- **Cut redundancy**: Remove unnecessary adjectives or verbs.\n- **Trust the reader**: Leave space for interpretation. The best poems often end with an image that lingers, rather than a conclusion that explains everything.\n\n### 3. Pay Attention to Rhythm and Tone (Yun)\nIn classical poetry, tonal patterns are crucial.\n- **Tonal balance**: In regulated verse (Lüshi), characters must alternate between level (ping) and oblique (ze) tones to create musicality.\n- **Rhyme**: Ensure the final characters of lines rhyme according to the chosen rhyme scheme (e.g., rhyming on the 1st, 2nd, and 4th lines in a Jueju).\n- **For modern poetry**: Focus on the natural cadence of spoken Chinese. Read your poem aloud to check if the flow feels natural and musical.\n\n### 4. Structure and Form\n- **Classical Forms**:\n  - **Jueju (Quatrain)**: 4 lines, 5 or 7 characters each. Ideal for capturing a single moment or emotion.\n  - **Lüshi (Regulated Verse)**: 8 lines, 5 or 7 characters each. Allows for more development, with parallelism required in the middle two couplets.\n- **Modern Poetry**: Free form, but still benefits from line breaks that emphasize rhythm and meaning.\n\n### 5. Cultivate \"Yijing\" (Imagery and Mood)\nThe highest goal in Chinese poetry is to create a unified atmosphere where the scene and the emotion merge seamlessly.\n- **Harmony**: Ensure the imagery supports the emotional tone. A bright, sunny image may clash with a theme of grief unless used ironically.\n- **Subtlety**: Avoid melodrama. Let the emotion emerge from the accumulation of images.\n\n### 6. Revise Ruthlessly\n- **Read aloud**: This is the most important step. If a line feels awkward or clunky when spoken, revise it.\n- **Seek feedback**: Share with others who understand Chinese poetic traditions.\n- **Study the masters**: Read Li Bai, Du Fu, Wang Wei, and Su Shi. Analyze how they use language, imagery, and structure.\n\n### Example: A Simple Jueju Structure\n> **Theme**: Autumn loneliness  \n> **Line 1**: Set the scene (e.g., \"Cold wind blows through the empty courtyard\")  \n> **Line 2**: Add detail (e.g., \"Leaves fall one by one on the stone\")",
+          "content_sha256": "1aed77560a9025b3a12fd74ae0cfcf4aa939309e2dd60a1030a6ca53346c2e43",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              false
+            ],
+            "loose_follow_all": false,
+            "loose_follow_list": [
+              false
+            ]
+          }
+        },
+        {
+          "id": "1571",
+          "verdict": "pass",
+          "prompt_sha256": "0f2c8cef4f6ece0f2f4809ce26fd5688d413a6f2667166b979cd2ec833839430",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 61,
+            "generated": 54,
+            "draft_generated": 253,
+            "draft_accepted": 30
+          },
+          "time": {
+            "wall_seconds": 5.814154916035477,
+            "prompt_ms": 345.67,
+            "decode_ms": 5387.26
+          },
+          "tok_s": {
+            "prompt": 176.46888651025543,
+            "decode": 10.023648385264496
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "the forest whispers where the river bends,\na quiet song that love extends.\nthrough the forest, shadows softly play,\non the land where we have stayed.\nthe forest holds our secret vow,\nbeneath the sky, both here and now.",
+          "content_sha256": "cdea49721ee3b0b5676b722ab22217fd762d95b3286967c8823f0bb8168ddaae",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true,
+              true,
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true,
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "1481",
+          "verdict": "pass",
+          "prompt_sha256": "815bbe09f05b4d1be79842b91439ca0e808664ddb98b8ef854ecdf42a7e84940",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 119,
+            "generated": 398,
+            "draft_generated": 1947,
+            "draft_accepted": 224
+          },
+          "time": {
+            "wall_seconds": 42.01718606305076,
+            "prompt_ms": 385.563,
+            "decode_ms": 41550.316
+          },
+          "tok_s": {
+            "prompt": 308.6395738180272,
+            "decode": 9.578747848752824
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "SECTION 1\nAntonia Maj: The Human Espresso Machine (Metaphorically Speaking)\n\nI don't know how to roast beans, but I know how to roast a bad idea in a boardroom. My degree is in something completely unrelated to caffeine, which means I bring a fresh, un-brewed perspective to your brand. I have spent years mastering the art of making people smile while they are slightly annoyed, a skill set that translates perfectly to the high-stakes world of customer service. I once convinced a client to buy a product they didn't need by telling them it would make their life \"slightly less boring,\" and honestly, that is the exact energy your coffee needs. I am not here to just sell you a cup; I am here to sell you the feeling of waking up on the right side of the bed, even if you are still half-asleep.\n\n* I can turn a lukewarm interaction into a scalding hot sales pitch without burning my tongue.\n* My marketing strategies are as chaotic and delightful as a cat knocking a mug off a table, but with better ROI.\n\nSECTION 2\nWhy You Should Hire Me Before I Accidentally Brew Your Competitor's Logo\n\nI am educated, but I am not \"coffee educated.\" This is a feature, not a bug. I look at your product with the wide-eyed wonder of someone who has never seen a bean before, which means I can explain the magic to customers who are also confused. I have a track record of turning \"meh\" into \"wow\" through sheer force of personality and strategic nonsense. I am ready to bring my weird energy to your team, ensuring that every cup served feels like a small, caffeinated miracle. Let's make your brand the one people whisper about in hushed, caffeinated tones. I promise I will not put sugar in the decaf, but I might put a little extra love in the marketing copy.",
+          "content_sha256": "788cf70a655817f89e90cd822d55e6e234ecea831b4a12a658460d6d3d8180c9",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true,
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "3280",
+          "verdict": "pass",
+          "prompt_sha256": "78390d033261ea4187b51edfffd5ae4456c25141ff6c88db0d6bb58bae182873",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 46,
+            "generated": 207,
+            "draft_generated": 770,
+            "draft_accepted": 140
+          },
+          "time": {
+            "wall_seconds": 16.814181833993644,
+            "prompt_ms": 326.738,
+            "decode_ms": 16411.568
+          },
+          "tok_s": {
+            "prompt": 140.78558355624384,
+            "decode": 12.61305440162695
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Subject: Clarification on Apple vs. Albania\n\nDear [name],\n\nI hope this email finds you well. I am writing to address your recent inquiry regarding the distinction between Apple and Albania, as these two entities are fundamentally different in nature and context.\n\nFirst, it is important to note that Apple is a multinational technology company headquartered in [city], known for its consumer electronics and software. In contrast, Albania is a sovereign country located in Southeastern Europe, with its capital in [capital_city].\n\nThe primary difference lies in their classification: Apple is a private corporation founded in [year], whereas Albania is a nation with a rich history dating back to [historical_period]. While Apple operates globally and influences the tech industry, Albania is a member of the United Nations and focuses on national governance and regional development.\n\nIf you have further questions or need more detailed information, please do not hesitate to reach out to [contact_person] for additional support.\n\nBest regards,\n\n[sender_name]\n[sender_title]",
+          "content_sha256": "86d9b75ef8bfbda71a8ece4f5cc47e1205763595f33c613d65a6580fedd6832a",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        },
+        {
+          "id": "1162",
+          "verdict": "pass",
+          "prompt_sha256": "bb0712dd75375fb304ee85b994150bed909df514e62e4a40ac8b0338327d536a",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 31,
+            "generated": 56,
+            "draft_generated": 352,
+            "draft_accepted": 23
+          },
+          "time": {
+            "wall_seconds": 7.902399251994211,
+            "prompt_ms": 321.105,
+            "decode_ms": 7497.265
+          },
+          "tok_s": {
+            "prompt": 96.541629684994,
+            "decode": 7.469390504403939
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "What is the sign that tells you when to act\nAnd guides your steps with a gentle tact\nIt is the blessing from above\nThat helps you find your way to love\nWhat is it called in olden days\nWhen luck is on your side in all your ways",
+          "content_sha256": "4ef83a0c8e3d0de391df51dd83296af7497966ef0234cd19f5bfd633e38ed3ac",
+          "detail": {
+            "instruction_id_list": null,
+            "strict_follow_list": [
+              true
+            ],
+            "loose_follow_all": true,
+            "loose_follow_list": [
+              true
+            ]
+          }
+        }
+      ]
+    },
+    "mini_gsm8k": {
+      "description": "Mixed mini-sweep: first 10 GSM8K problems of the 100-problem sample, 8-shot CoT",
+      "complete": true,
+      "quality": 0.9,
+      "quality_label": "accuracy",
+      "verdicts": {
+        "pass": 9,
+        "fail": 1,
+        "error": 0,
+        "unscored": 0
+      },
+      "metrics": {
+        "score": 0.9
+      },
+      "aggregate": {
+        "cases": 10,
+        "prompt_tokens": 17250,
+        "prompt_tokens_per_second": 686.7790611455523,
+        "generated_tokens": 1421,
+        "decode_tokens_per_second": 25.757763586617585,
+        "median_case_decode_tokens_per_second": 26.312471153025616,
+        "wall_seconds": 80.4153585601016,
+        "draft_generated": 2552,
+        "draft_accepted": 1212,
+        "draft_acceptance": 0.47492163009404387
+      },
+      "timing_source": "server",
+      "cases": [
+        {
+          "id": "5dc76d774bd01a74",
+          "verdict": "fail",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1736,
+            "generated": 218,
+            "draft_generated": 330,
+            "draft_accepted": 187
+          },
+          "time": {
+            "wall_seconds": 9.744336442032363,
+            "prompt_ms": 2529.786,
+            "decode_ms": 7141.389
+          },
+          "tok_s": {
+            "prompt": 686.224052153028,
+            "decode": 30.5262743704341
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "First, determine how much money Alexandra raised: $430.\nNext, calculate how much Kim raised. Kim raises $320 more than Alexandra, so Kim raised $430 + $320 = $<<430+320=750>>750.\nThen, determine how much money Sarah raised: $300.\nNext, calculate how much Maryam raised. Maryam raises $400 more than Sarah, so Maryam raised $300 + $400 = $<<300+400=700>>700.\nFinally, add the amounts raised by all four girls to find the total: $430 (Alexandra) + $750 (Kim) + $700 (Maryam) + $300 (Sarah) = $<<430+750+700+300=2180>>2180.\n#### 2180",
+          "content_sha256": "26fc502ad1b63db49b7e5662ae69454466faf9c4fed5cfda9f89547a719c3ee6",
+          "expected": "2280",
+          "predicted": "2180"
+        },
+        {
+          "id": "b26cfbf53406dd4d",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1730,
+            "generated": 144,
+            "draft_generated": 264,
+            "draft_accepted": 123
+          },
+          "time": {
+            "wall_seconds": 8.243908803036902,
+            "prompt_ms": 2518.918,
+            "decode_ms": 5718.451
+          },
+          "tok_s": {
+            "prompt": 686.8028256576831,
+            "decode": 25.181644469804848
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Kalinda adds 4 pieces per minute.\nHer mom adds half as many pieces per minute as Kalinda, so her mom adds 4 / 2 = <<4/2=2>>2 pieces per minute.\nTogether, they add 4 + 2 = <<4+2=6>>6 pieces per minute.\nTo complete a 360 piece puzzle, it will take 360 / 6 = <<360/6=60>>60 minutes.\nSince there are 60 minutes in an hour, it will take 60 / 60 = <<60/60=1>>1 hour.\n#### 1",
+          "content_sha256": "c75363e4ceff465becaec79164be2a7769d0981c46d2d9ca03234acff9693f42",
+          "expected": "1",
+          "predicted": "1"
+        },
+        {
+          "id": "971dabc5c71b6706",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1724,
+            "generated": 166,
+            "draft_generated": 385,
+            "draft_accepted": 133
+          },
+          "time": {
+            "wall_seconds": 10.784104539023247,
+            "prompt_ms": 2503.176,
+            "decode_ms": 8273.532
+          },
+          "tok_s": {
+            "prompt": 688.7250437044778,
+            "decode": 20.063982347563293
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "First, determine the duration of the first leg of the trip. Tom sails from 1 PM to 4 PM, which is a total of 4 - 1 = <<4-1=3>>3 hours.\n\nNext, calculate the distance traveled during this first leg. Since the ship travels at 10 miles per hour for 3 hours, the distance is 10 * 3 = <<10*3=30>>30 miles.\n\nThe return trip covers the same distance of 30 miles. The speed on the return trip is 6 miles per hour.\n\nTo find the time it takes to get back, divide the distance by the speed: 30 miles / 6 mph = <<30/6=5>>5 hours.\n\n#### 5",
+          "content_sha256": "c3ff47b3b4593ed4ca96c34068deb1008e7ea133b701c7ead73d12c2cfb8bae3",
+          "expected": "5",
+          "predicted": "5"
+        },
+        {
+          "id": "0dd0b319394d0455",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1724,
+            "generated": 134,
+            "draft_generated": 264,
+            "draft_accepted": 112
+          },
+          "time": {
+            "wall_seconds": 8.182262443006039,
+            "prompt_ms": 2484.255,
+            "decode_ms": 5691.895
+          },
+          "tok_s": {
+            "prompt": 693.970627008902,
+            "decode": 23.542247353473662
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "The first son is 12 years old.\nThe second son is 4 years younger, so he is 12 - 4 = <<12-4=8>>8 years old.\nJames needs a total of 12 + 8 = <<12+8=20>>20 candles.\nA pack of 5 candles costs $3.\nJames needs 20 / 5 = <<20/5=4>>4 packs of candles.\nThe total cost is 4 packs * $3/pack = $<<4*3=12>>12.\n#### 12",
+          "content_sha256": "2310d8089d2a584b093aa1cdaad2174022bd97d609cd8ed86fb456adeb8cc4bc",
+          "expected": "12",
+          "predicted": "12"
+        },
+        {
+          "id": "73dc5c4f78d54973",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1737,
+            "generated": 117,
+            "draft_generated": 176,
+            "draft_accepted": 103
+          },
+          "time": {
+            "wall_seconds": 6.358110163011588,
+            "prompt_ms": 2531.236,
+            "decode_ms": 3819.213
+          },
+          "tok_s": {
+            "prompt": 686.2260176451347,
+            "decode": 30.634583617095984
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Mariah used 1/4 of a skein, which is 364 / 4 = <<364/4=91>>91 yards.\nHer grandma used 1/2 of a skein, which is 364 / 2 = <<364/2=182>>182 yards.\nAltogether, they used 91 + 182 = <<91+182=273>>273 yards of yarn.\n#### 273",
+          "content_sha256": "55320e5cc10e85086782df7dff82e4446e6d27c03a44844863cf6ee4549929b7",
+          "expected": "273",
+          "predicted": "273"
+        },
+        {
+          "id": "7a9da644d3e1e8b3",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1752,
+            "generated": 130,
+            "draft_generated": 198,
+            "draft_accepted": 115
+          },
+          "time": {
+            "wall_seconds": 6.847813207015861,
+            "prompt_ms": 2533.861,
+            "decode_ms": 4307.047
+          },
+          "tok_s": {
+            "prompt": 691.4349287510246,
+            "decode": 30.183092963694154
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Katelyn saw 50 fairies initially.\nHer friend saw half as many fairies as Katelyn, which is 50 / 2 = <<50/2=25>>25 fairies.\nThese 25 fairies joined the original group, so the total number of fairies became 50 + 25 = <<50+25=75>>75.\nThen, 30 fairies flew away, leaving 75 - 30 = <<75-30=45>>45 fairies.\n#### 45",
+          "content_sha256": "3f359468cf04e1681b9f0e7d8d951a4b1c30beaebb0927557a905a4b6c4fe8f8",
+          "expected": "45",
+          "predicted": "45"
+        },
+        {
+          "id": "46ce7073561764ac",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1701,
+            "generated": 68,
+            "draft_generated": 121,
+            "draft_accepted": 60
+          },
+          "time": {
+            "wall_seconds": 5.103351900994312,
+            "prompt_ms": 2492.917,
+            "decode_ms": 2605.225
+          },
+          "tok_s": {
+            "prompt": 682.3331863836622,
+            "decode": 26.101392394131025
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Ann's brother is currently twice her age, so he is 9 * 2 = <<9*2=18>>18 years old.\nIn 3 years, her brother will be 18 + 3 = <<18+3=21>>21 years old.\n#### 21",
+          "content_sha256": "e5ea07065042532b18ce7da5c0e9ea667d9f04e4cdb8382d7b8b8bbac6213b49",
+          "expected": "21",
+          "predicted": "21"
+        },
+        {
+          "id": "5d6ed708fe454661",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1712,
+            "generated": 221,
+            "draft_generated": 385,
+            "draft_accepted": 189
+          },
+          "time": {
+            "wall_seconds": 10.837403865996748,
+            "prompt_ms": 2500.569,
+            "decode_ms": 8332.218
+          },
+          "tok_s": {
+            "prompt": 684.6441749857732,
+            "decode": 26.523549911920206
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "First, determine the number of plates. Half a dozen is equal to 6 plates.\nCalculate the total cost of the plates: 6 plates * $6000/plate = $<<6*6000=36000>>36000.\nThe cost of twenty dozen cups is $1200 less than the cost of the plates: $36000 - $1200 = $<<36000-1200=34800>>34800.\nDetermine the number of cups. One dozen is 12, so twenty dozen is 20 * 12 = <<20*12=240>>240 cups.\nCalculate the cost per cup by dividing the total cost of the cups by the number of cups: $34800 / 240 = $<<34800/240=145>>145.\n#### 145",
+          "content_sha256": "255ebb83ea4a6fd4c524716d5439a8ef2dd4db1f1f4d311bfcd0de97cfbf4c9f",
+          "expected": "145",
+          "predicted": "145"
+        },
+        {
+          "id": "bca059699200fc81",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1717,
+            "generated": 99,
+            "draft_generated": 231,
+            "draft_accepted": 81
+          },
+          "time": {
+            "wall_seconds": 7.5340465669869445,
+            "prompt_ms": 2515.596,
+            "decode_ms": 5012.168
+          },
+          "tok_s": {
+            "prompt": 682.5420298012876,
+            "decode": 19.751931699017273
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "First, calculate the number of new students added this year by finding 20% of last year's enrollment: 50 * 0.20 = <<50*0.20=10>>10 students.\nThen, add the number of new students to last year's enrollment to find the total enrollment this year: 50 + 10 = <<50+10=60>>60 students.\n#### 60",
+          "content_sha256": "761f8561ccef94ff65b7a419a7b4adf6ac0346ce1b756f85541580ee37506938",
+          "expected": "60",
+          "predicted": "60"
+        },
+        {
+          "id": "e2c3edfe68818602",
+          "verdict": "pass",
+          "prompt_sha256": null,
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 1717,
+            "generated": 124,
+            "draft_generated": 198,
+            "draft_accepted": 109
+          },
+          "time": {
+            "wall_seconds": 6.78002062899759,
+            "prompt_ms": 2506.934,
+            "decode_ms": 4266.695
+          },
+          "tok_s": {
+            "prompt": 684.9003603605041,
+            "decode": 29.062307008117525
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Monic has 4 fewer crabs than Bo, so Monic has 40 - 4 = <<40-4=36>>36 crabs.\nRani has ten more crabs than Monic, so Rani has 36 + 10 = <<36+10=46>>46 crabs.\nThe total number of crabs the three have together is 40 + 36 + 46 = <<40+36+46=122>>122.\n#### 122",
+          "content_sha256": "ac18bc26df343d548a544f266a4f6d2ceb46baf166ce5e30a493578b84b4f214",
+          "expected": "122",
+          "predicted": "122"
+        }
+      ]
+    },
+    "mini_tools": {
+      "description": "Mixed mini-sweep: first 10 of the 20 exact tool-call checks",
+      "complete": true,
+      "quality": 1.0,
+      "quality_label": "exact",
+      "verdicts": {
+        "pass": 10,
+        "fail": 0,
+        "error": 0,
+        "unscored": 0
+      },
+      "metrics": {
+        "score": 1.0
+      },
+      "aggregate": {
+        "cases": 10,
+        "prompt_tokens": 4852,
+        "prompt_tokens_per_second": 455.9770680749704,
+        "generated_tokens": 351,
+        "decode_tokens_per_second": 39.1478614727827,
+        "median_case_decode_tokens_per_second": 39.764967960825395,
+        "wall_seconds": 19.75504929193994,
+        "draft_generated": 396,
+        "draft_accepted": 321,
+        "draft_acceptance": 0.8106060606060606
+      },
+      "timing_source": "server",
+      "cases": [
+        {
+          "id": "b646c59280387c88",
+          "verdict": "pass",
+          "prompt_sha256": "b646c59280387c8843f9253324717dc00683c343a829d69284da6de2e7852956",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 39,
+            "draft_generated": 44,
+            "draft_accepted": 36
+          },
+          "time": {
+            "wall_seconds": 2.1221240789745934,
+            "prompt_ms": 1028.179,
+            "decode_ms": 1005.046
+          },
+          "tok_s": {
+            "prompt": 471.70774738639864,
+            "decode": 38.804194036889854
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "city": "Paris",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "expected": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Paris",
+              "unit": "celsius"
+            }
+          },
+          "predicted": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Paris",
+              "unit": "celsius"
+            }
+          }
+        },
+        {
+          "id": "b4df67d2c10dea7c",
+          "verdict": "pass",
+          "prompt_sha256": "b4df67d2c10dea7caa803d7b40274e152fd3689abc4823e5290dd40656fde4ff",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 39,
+            "draft_generated": 44,
+            "draft_accepted": 36
+          },
+          "time": {
+            "wall_seconds": 2.0548637990141287,
+            "prompt_ms": 1057.062,
+            "decode_ms": 991.259
+          },
+          "tok_s": {
+            "prompt": 458.8188772276367,
+            "decode": 39.34390507425406
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "city": "Boston",
+                "unit": "fahrenheit"
+              }
+            }
+          ],
+          "expected": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Boston",
+              "unit": "fahrenheit"
+            }
+          },
+          "predicted": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Boston",
+              "unit": "fahrenheit"
+            }
+          }
+        },
+        {
+          "id": "477027af2931ea51",
+          "verdict": "pass",
+          "prompt_sha256": "477027af2931ea51c4d76af253fbf989b9ced508bbfd2f0ff18f68eb6ea85371",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 40,
+            "draft_generated": 44,
+            "draft_accepted": 37
+          },
+          "time": {
+            "wall_seconds": 2.0692485899780877,
+            "prompt_ms": 1066.95,
+            "decode_ms": 995.352
+          },
+          "tok_s": {
+            "prompt": 454.5667557055157,
+            "decode": 40.186788191514154
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "city": "Tokyo",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "expected": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Tokyo",
+              "unit": "celsius"
+            }
+          },
+          "predicted": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Tokyo",
+              "unit": "celsius"
+            }
+          }
+        },
+        {
+          "id": "8b1abe156fa1563d",
+          "verdict": "pass",
+          "prompt_sha256": "8b1abe156fa1563d7c5a4402ec2e80a9e66c88a6bc8ea89cc1381e686061265e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 40,
+            "draft_generated": 44,
+            "draft_accepted": 37
+          },
+          "time": {
+            "wall_seconds": 2.0617590259644203,
+            "prompt_ms": 1062.06,
+            "decode_ms": 992.697
+          },
+          "tok_s": {
+            "prompt": 456.65969907538187,
+            "decode": 40.29426904684914
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "city": "Oslo",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "expected": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Oslo",
+              "unit": "celsius"
+            }
+          },
+          "predicted": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Oslo",
+              "unit": "celsius"
+            }
+          }
+        },
+        {
+          "id": "1d0c474971aef7ac",
+          "verdict": "pass",
+          "prompt_sha256": "1d0c474971aef7ac1c4862f850678ac31673502073017f1b1729a77eb79fd210",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 39,
+            "draft_generated": 44,
+            "draft_accepted": 34
+          },
+          "time": {
+            "wall_seconds": 2.0566007799934596,
+            "prompt_ms": 1067.162,
+            "decode_ms": 982.087
+          },
+          "tok_s": {
+            "prompt": 454.47645249737155,
+            "decode": 39.71134940183507
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "city": "Austin",
+                "unit": "fahrenheit"
+              }
+            }
+          ],
+          "expected": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Austin",
+              "unit": "fahrenheit"
+            }
+          },
+          "predicted": {
+            "name": "get_weather",
+            "arguments": {
+              "city": "Austin",
+              "unit": "fahrenheit"
+            }
+          }
+        },
+        {
+          "id": "26ad92ba0c0ddcfd",
+          "verdict": "pass",
+          "prompt_sha256": "26ad92ba0c0ddcfdfd0606e53699507792092efb295d4cfd4d6d1d97b353020b",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 30,
+            "draft_generated": 33,
+            "draft_accepted": 28
+          },
+          "time": {
+            "wall_seconds": 1.832499545009341,
+            "prompt_ms": 1073.475,
+            "decode_ms": 753.417
+          },
+          "tok_s": {
+            "prompt": 451.80372155848994,
+            "decode": 39.81858651981572
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "calculator",
+              "arguments": {
+                "expression": "17*29"
+              }
+            }
+          ],
+          "expected": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "17*29"
+            }
+          },
+          "predicted": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "17*29"
+            }
+          }
+        },
+        {
+          "id": "451d2edfe69f2664",
+          "verdict": "pass",
+          "prompt_sha256": "451d2edfe69f2664e7578a5397446278bc2c07d410c1f481ebff3decd5b04d45",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 488,
+            "generated": 34,
+            "draft_generated": 33,
+            "draft_accepted": 32
+          },
+          "time": {
+            "wall_seconds": 1.845902779023163,
+            "prompt_ms": 1086.329,
+            "decode_ms": 752.928
+          },
+          "tok_s": {
+            "prompt": 449.21934331128045,
+            "decode": 45.157040248204346
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "calculator",
+              "arguments": {
+                "expression": "(144/12)+8"
+              }
+            }
+          ],
+          "expected": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "(144/12)+8"
+            }
+          },
+          "predicted": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "(144/12)+8"
+            }
+          }
+        },
+        {
+          "id": "9e4cf81bb18fc2ca",
+          "verdict": "pass",
+          "prompt_sha256": "9e4cf81bb18fc2cad0bcf4d66c8f78d45e0c7b271e0d8d4d047618dfb72e8fe6",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 484,
+            "generated": 29,
+            "draft_generated": 33,
+            "draft_accepted": 27
+          },
+          "time": {
+            "wall_seconds": 1.8361226199776866,
+            "prompt_ms": 1066.961,
+            "decode_ms": 762.438
+          },
+          "tok_s": {
+            "prompt": 453.6248278990516,
+            "decode": 38.03587963873784
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "calculator",
+              "arguments": {
+                "expression": "2**10"
+              }
+            }
+          ],
+          "expected": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "2**10"
+            }
+          },
+          "predicted": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "2**10"
+            }
+          }
+        },
+        {
+          "id": "8363dd2ef0598c11",
+          "verdict": "pass",
+          "prompt_sha256": "8363dd2ef0598c111e687bf771c53f3c20bd41b2556e87828a7164921ea5c935",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 30,
+            "draft_generated": 44,
+            "draft_accepted": 27
+          },
+          "time": {
+            "wall_seconds": 2.0635379620362073,
+            "prompt_ms": 1058.779,
+            "decode_ms": 999.219
+          },
+          "tok_s": {
+            "prompt": 458.07482014660286,
+            "decode": 30.023448313132555
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "calculator",
+              "arguments": {
+                "expression": "91-37"
+              }
+            }
+          ],
+          "expected": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "91-37"
+            }
+          },
+          "predicted": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "91-37"
+            }
+          }
+        },
+        {
+          "id": "b8cd85a484d156f7",
+          "verdict": "pass",
+          "prompt_sha256": "b8cd85a484d156f730830885400e02f72ce05c2e0eb5054d89b78883ce847eda",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 485,
+            "generated": 31,
+            "draft_generated": 33,
+            "draft_accepted": 27
+          },
+          "time": {
+            "wall_seconds": 1.8123901119688526,
+            "prompt_ms": 1073.929,
+            "decode_ms": 731.564
+          },
+          "tok_s": {
+            "prompt": 451.6127230012412,
+            "decode": 42.374966510107114
+          },
+          "timing_source": "server",
+          "finish_reason": "tool_calls",
+          "content": "",
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tool_calls": [
+            {
+              "name": "calculator",
+              "arguments": {
+                "expression": "(7+5)*3"
+              }
+            }
+          ],
+          "expected": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "(7+5)*3"
+            }
+          },
+          "predicted": {
+            "name": "calculator",
+            "arguments": {
+              "expression": "(7+5)*3"
+            }
+          }
+        }
+      ]
+    },
+    "mini_chat": {
+      "description": "Mixed mini-sweep: 10 short chat prompts, non-empty and non-pathological output",
+      "complete": true,
+      "quality": 1.0,
+      "quality_label": "valid",
+      "verdicts": {
+        "pass": 10,
+        "fail": 0,
+        "error": 0,
+        "unscored": 0
+      },
+      "metrics": {
+        "score": 1.0
+      },
+      "aggregate": {
+        "cases": 10,
+        "prompt_tokens": 398,
+        "prompt_tokens_per_second": 123.883530805134,
+        "generated_tokens": 1105,
+        "decode_tokens_per_second": 17.132067417739602,
+        "median_case_decode_tokens_per_second": 16.897425264636503,
+        "wall_seconds": 68.56633593101287,
+        "draft_generated": 3014,
+        "draft_accepted": 855,
+        "draft_acceptance": 0.2836761778367618
+      },
+      "timing_source": "server",
+      "cases": [
+        {
+          "id": "2e67f3f4422186b3",
+          "verdict": "pass",
+          "prompt_sha256": "2e67f3f4422186b3433e3e50ba72cf0a128977fb09ad46b75706058f7120ee60",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 28,
+            "generated": 106,
+            "draft_generated": 330,
+            "draft_accepted": 79
+          },
+          "time": {
+            "wall_seconds": 7.554303930024616,
+            "prompt_ms": 350.154,
+            "decode_ms": 7055.162
+          },
+          "tok_s": {
+            "prompt": 79.96481548118828,
+            "decode": 15.024460104530556
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "*   **Reproducibility**: A fixed seed ensures that random number generators produce the exact same sequence of values, allowing the test to yield identical results on every run.\n*   **Debugging**: When a test fails, a fixed seed allows developers to reproduce the specific random state that caused the error, making it possible to isolate and fix the bug.\n*   **Consistency**: It prevents flaky tests caused by varying random inputs, ensuring that the test suite reliably validates the code logic rather than chance outcomes.",
+          "content_sha256": "291b9b11407a002dfbe09bce629baa324c25e1a4d1bf3de5491a40a96243ffc2"
+        },
+        {
+          "id": "c8e37db9c0884430",
+          "verdict": "pass",
+          "prompt_sha256": "c8e37db9c088443072ba3a5157ca2dcc321d178d4d91682a6bb503b49585b82e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 47,
+            "generated": 61,
+            "draft_generated": 209,
+            "draft_accepted": 45
+          },
+          "time": {
+            "wall_seconds": 4.882745429000352,
+            "prompt_ms": 325.65,
+            "decode_ms": 4459.79
+          },
+          "tok_s": {
+            "prompt": 144.32673115307847,
+            "decode": 13.677774065595017
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "**Success Rate:** 95%\n(114 successes / 120 total requests)\n\n**Reliability Observation:** The 5% failure rate is dominated by timeouts (4 out of 5 failures), suggesting potential latency issues or resource bottlenecks rather than logic errors.",
+          "content_sha256": "1f80a745dfa900b68888b26d4943bb3fccb431bebbe69e2ad71f29b0d152d8ab"
+        },
+        {
+          "id": "d4c26f768fcbb308",
+          "verdict": "pass",
+          "prompt_sha256": "d4c26f768fcbb308ea8558df77f87f15157b334c39f72c36d6957bd213b0cbff",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 53,
+            "generated": 102,
+            "draft_generated": 154,
+            "draft_accepted": 91
+          },
+          "time": {
+            "wall_seconds": 3.690212204994168,
+            "prompt_ms": 318.619,
+            "decode_ms": 3301.624
+          },
+          "tok_s": {
+            "prompt": 166.34287346329,
+            "decode": 30.89388737179037
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "```sql\nSELECT c.id, c.name, SUM(i.total) AS total_paid\nFROM customers c\nJOIN invoices i ON i.customer_id = c.id\nWHERE i.status = 'paid'\n  AND i.paid_at >= '2026-01-01'\n  AND i.paid_at < '2027-01-01'\nGROUP BY c.id, c.name\nORDER BY total_paid DESC\nLIMIT 5;\n```",
+          "content_sha256": "a2a2ae13f5ea2fa506969336304e65c6ba29c8b55f4a758d63398dba0ace1457"
+        },
+        {
+          "id": "457c35702fbccb81",
+          "verdict": "pass",
+          "prompt_sha256": "457c35702fbccb81ba6807adde9520e6a289cdb480f015b4b61010d5375e0cb1",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 26,
+            "generated": 89,
+            "draft_generated": 352,
+            "draft_accepted": 60
+          },
+          "time": {
+            "wall_seconds": 7.937897184980102,
+            "prompt_ms": 309.455,
+            "decode_ms": 7530.188
+          },
+          "tok_s": {
+            "prompt": 84.01867799841658,
+            "decode": 11.819094025275332
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "KV cache хранит ключи и значения для всех токенов в текущем контексте конкретного запроса, чтобы избежать повторного вычисления при генерации новых токенов. Prefix cache, напротив, кэширует результаты вычислений для общих префиксов запросов, позволяя разным пользователям или запросам с одинаковым началом (например, системным промптом) переиспользовать уже вычисленные состояния модели.",
+          "content_sha256": "a8b5a743feda44b2a3a02fff3a36c76bae493f26f863c72c6a2e61d02ec22bb8"
+        },
+        {
+          "id": "d3005e9539e0f1eb",
+          "verdict": "pass",
+          "prompt_sha256": "d3005e9539e0f1eb4abba4e6bd4e32a471ba2730c24b860e030f9521dcf078c8",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 36,
+            "generated": 265,
+            "draft_generated": 715,
+            "draft_accepted": 199
+          },
+          "time": {
+            "wall_seconds": 15.698675409948919,
+            "prompt_ms": 307.294,
+            "decode_ms": 15320.629
+          },
+          "tok_s": {
+            "prompt": 117.15165281456846,
+            "decode": 17.296939962451933
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "The logical flaw in this argument is the **Fallacy of the Undistributed Middle** (also known as **Affirming the Consequent**).\n\n### Explanation:\n\n1.  **Premise 1:** All fast systems use caching.\n    *   Logically: If a system is fast → it uses caching.\n    *   (Fast → Caching)\n\n2.  **Premise 2:** This system uses caching.\n    *   (Caching is true for this system)\n\n3.  **Conclusion:** Therefore, it is fast.\n    *   (Therefore, Fast is true)\n\n### Why it’s flawed:\nThe first premise states that **all** fast systems have caching, but it does **not** state that **only** fast systems have caching. Many slow systems may also use caching. Therefore, knowing that a system uses caching does not prove that it is fast; it only proves that it *could* be fast, or it might be slow.\n\n### Analogy:\n*   All dogs are mammals.\n*   This animal is a mammal.\n*   Therefore, this animal is a dog.\n    *   *(Flawed: It could be a cat, a cow, or a human.)*",
+          "content_sha256": "f67a09e87f0fe3bb5bb554299db48646f64870b210092f08363d2779cb32dbd0"
+        },
+        {
+          "id": "58637362fb233c0f",
+          "verdict": "pass",
+          "prompt_sha256": "58637362fb233c0fe98150b5dccefce1e2cfb7265a11454dbaad21062109f56e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 53,
+            "generated": 26,
+            "draft_generated": 33,
+            "draft_accepted": 26
+          },
+          "time": {
+            "wall_seconds": 1.1094777670223266,
+            "prompt_ms": 316.718,
+            "decode_ms": 721.127
+          },
+          "tok_s": {
+            "prompt": 167.34129414810653,
+            "decode": 36.05467552872101
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "2026-08-19T20:45:00+03:00",
+          "content_sha256": "dba1d9425166e7803d2df2c651e2d02f5963584a4ff94c078e9c525b4c5941ec"
+        },
+        {
+          "id": "e12d99b39d633ca1",
+          "verdict": "pass",
+          "prompt_sha256": "e12d99b39d633ca139810cbc4ff0342a693c448a309c5951c1a7377d24eb5021",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 37,
+            "generated": 63,
+            "draft_generated": 99,
+            "draft_accepted": 55
+          },
+          "time": {
+            "wall_seconds": 2.541703534021508,
+            "prompt_ms": 328.85,
+            "decode_ms": 2136.319
+          },
+          "tok_s": {
+            "prompt": 112.51330393796562,
+            "decode": 29.48997785443092
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "{\n  \"model\": \"gpt-4\",\n  \"tokens_per_second\": 150.5,\n  \"passed\": true,\n  \"timestamp\": \"2023-10-27T10:00:00Z\"\n}",
+          "content_sha256": "8eb9177d38ef05e063bac4d63f46140c39254971c5b987c30e7234a6605a48b0"
+        },
+        {
+          "id": "d5d5991cfdbfb717",
+          "verdict": "pass",
+          "prompt_sha256": "d5d5991cfdbfb7176901d1c61b53362dc828399d5b75516e24ceeb517078b0ce",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 37,
+            "generated": 364,
+            "draft_generated": 1034,
+            "draft_accepted": 273
+          },
+          "time": {
+            "wall_seconds": 22.449114380055107,
+            "prompt_ms": 307.949,
+            "decode_ms": 22063.4
+          },
+          "tok_s": {
+            "prompt": 120.14976505849994,
+            "decode": 16.49791056682107
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "### Common Failure Mode\n\nThe primary failure mode is **skipping elements** (or, in rare cases, infinite loops).\n\nWhen you remove an item from a list while iterating over it, the list shrinks and the indices of subsequent elements shift to the left. However, the iterator's internal index counter still increments by 1. Consequently, the element that shifted into the current index is never visited.\n\n**Example:**\n```python\nlst = [1, 2, 3, 4]\nfor i in range(len(lst)):\n    if lst[i] % 2 == 0:\n        lst.pop(i)\n# Result: [1, 3] (4 was skipped because it shifted to index 1 after 2 was removed)\n```\n\n### Safest One-Line Iteration Fix\n\nThe safest one-line fix is to **iterate over a shallow copy** of the list. This ensures the iterator operates on a static snapshot of the data, while mutations affect the original list.\n\n```python\nfor item in lst[:]:\n    if condition:\n        lst.remove(item)\n```\n\n**Why this is safe:**\n- `lst[:]` creates a new list containing the same elements.\n- The `for` loop iterates over this copy, so its length and indices remain constant.\n- `lst.remove(item)` modifies the original list without affecting the iteration state.\n\n> **Note:** While `lst[:]` is the most common one-line fix, it has O(n) memory overhead. For large lists, a list comprehension (`lst = [x for x in lst if not condition]`) is often preferred for performance and clarity, but it is not a \"one-line iteration fix\" in the same structural sense.",
+          "content_sha256": "424c0b693f99624c224487db9a4e02fea0f516ec481b3939b8c6f41e6d3df9bf"
+        },
+        {
+          "id": "f716ba181c7f861a",
+          "verdict": "pass",
+          "prompt_sha256": "f716ba181c7f861a06a9291a062cba8ea46000ecc2ac71a833f34daa3746ac2e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 41,
+            "generated": 22,
+            "draft_generated": 55,
+            "draft_accepted": 20
+          },
+          "time": {
+            "wall_seconds": 1.573688163945917,
+            "prompt_ms": 313.136,
+            "decode_ms": 1187.147
+          },
+          "tok_s": {
+            "prompt": 130.93352409176842,
+            "decode": 18.531824618181236
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Retries are permitted exclusively for transport errors, strictly prohibited for failed assertions, and must always be documented.",
+          "content_sha256": "b6a2511ea9e8513945dbdb1c78cc491077bc102ca902247d264b42da65d65715"
+        },
+        {
+          "id": "23d6ed8e37aab38b",
+          "verdict": "pass",
+          "prompt_sha256": "23d6ed8e37aab38b128a797f5d138eb26c88e2d47eaf2d95245c6fedb4af1c5e",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 40,
+            "generated": 7,
+            "draft_generated": 33,
+            "draft_accepted": 7
+          },
+          "time": {
+            "wall_seconds": 1.1285179270198569,
+            "prompt_ms": 334.87,
+            "decode_ms": 723.543
+          },
+          "tok_s": {
+            "prompt": 119.44933854928777,
+            "decode": 9.67461505397744
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "Positive, with minor drawback.",
+          "content_sha256": "dcfe7154fa72458f922d4df47e99a8f11b9e8db96cac72994840a61fd2000a27"
+        }
+      ]
+    }
+  },
+  "overall": {
+    "cases": 40,
+    "api_calls": 40,
+    "prompt_tokens": 23081,
+    "generated_tokens": 5675,
+    "decode_tokens_per_second": 15.376968773939383,
+    "wall_seconds": 413.3115906181629,
+    "draft_generated": 17208,
+    "draft_accepted": 4179,
+    "draft_acceptance": 0.24285216178521618
+  },
+  "extra": {
+    "series": "extended_validation/complex",
+    "mode": "mtp11",
+    "legacy_aggregate": {
+      "cases": 40,
+      "prompt_tokens": 23081,
+      "prompt_tokens_per_second": 544.9556926301618,
+      "generated_tokens": 5675,
+      "decode_tokens_per_second": 15.376968773939382,
+      "draft_generated": 17208,
+      "draft_accepted": 4179,
+      "draft_acceptance": 0.24285216178521618,
+      "wall_seconds": 413.3115906181629
+    },
+    "memory": {
+      "memory_ready": {
+        "pid": 316444,
+        "status": {
+          "VmSize_mib": 108922.48828125,
+          "VmHWM_mib": 17446.09375,
+          "VmRSS_mib": 1939.9453125
+        },
+        "smaps_rollup": {
+          "Rss_mib": 1939.9453125,
+          "Pss_mib": 1936.9560546875,
+          "Shared_Clean_mib": 3.28515625,
+          "Shared_Dirty_mib": 0.0,
+          "Private_Clean_mib": 1492.92578125,
+          "Private_Dirty_mib": 443.734375
+        },
+        "system_mem_available_mib": 94714.8125
+      },
+      "memory_after_warmup": {
+        "pid": 316444,
+        "status": {
+          "VmSize_mib": 109127.13671875,
+          "VmHWM_mib": 17446.09375,
+          "VmRSS_mib": 2188.953125
+        },
+        "smaps_rollup": {
+          "Rss_mib": 2188.953125,
+          "Pss_mib": 2185.9638671875,
+          "Shared_Clean_mib": 3.28515625,
+          "Shared_Dirty_mib": 0.0,
+          "Private_Clean_mib": 1497.2890625,
+          "Private_Dirty_mib": 688.37890625
+        },
+        "system_mem_available_mib": 94477.8828125
+      },
+      "memory_after_suite": {
+        "pid": 316444,
+        "status": {
+          "VmSize_mib": 116243.1328125,
+          "VmHWM_mib": 17446.09375,
+          "VmRSS_mib": 9345.36328125
+        },
+        "smaps_rollup": {
+          "Rss_mib": 9345.36328125,
+          "Pss_mib": 9342.3740234375,
+          "Shared_Clean_mib": 3.28515625,
+          "Shared_Dirty_mib": 0.0,
+          "Private_Clean_mib": 1376.98828125,
+          "Private_Dirty_mib": 7965.08984375
+        },
+        "system_mem_available_mib": 87294.3515625
+      }
+    }
+  }
+}
