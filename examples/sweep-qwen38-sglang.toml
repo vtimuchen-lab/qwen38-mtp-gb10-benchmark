@@ -1,0 +1,127 @@
+# Speculative-decoding sweep for Qwen3.8-27B on SGLang (one server per point).
+#
+#   python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --dry-run   # points + commands
+#   python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --smoke     # 2-3 cases per suite
+#   python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml             # full run / resume
+#   python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --report-only
+#
+# Every string in [base] may use {name} placeholders. Grid axes define names;
+# a table value on an axis also defines its other keys as names (its `label`
+# names the point). A string that is exactly "{name}" keeps the TOML type
+# (bool/int/list; a list is spliced into the command). Write {{ }} for braces.
+#
+# The model paths, draft checkpoints and speculative flag names are
+# placeholders: check them against your SGLang version before the first run
+# (`python -m sglang.launch_server --help`). DFLASH and DSPARK in particular
+# need their own draft checkpoints and may use different flag names.
+
+[sweep]
+name = "qwen38-sglang"
+output_dir = "results/sweeps/qwen38-sglang"      # points/<id>.json, report.md, report.json
+suites = ["gsm8k", "ifeval", "tools", "long_context"]
+smoke = false
+ready_timeout = 1500                             # seconds to wait for /health per point
+
+[grid]
+spec = [
+  { label = "off", spec_args = [] },
+  { label = "mtp", spec_args = [
+      "--speculative-algorithm", "NEXTN",
+      "--speculative-num-steps", "{steps}",
+      "--speculative-eagle-topk", "1",
+      "--speculative-num-draft-tokens", "{block}",
+  ] },
+  { label = "eagle", spec_args = [
+      "--speculative-algorithm", "EAGLE3",
+      "--speculative-draft-model-path", "/models/Qwen3.8-27B-EAGLE3",
+      "--speculative-num-steps", "{steps}",
+      "--speculative-eagle-topk", "1",
+      "--speculative-num-draft-tokens", "{block}",
+  ] },
+  { label = "dflash", spec_args = [
+      "--speculative-algorithm", "DFLASH",
+      "--speculative-draft-model-path", "/models/Qwen3.8-27B-DFlash",
+      "--speculative-num-draft-tokens", "{block}",
+  ] },
+  { label = "dspark", spec_args = [
+      "--speculative-algorithm", "DSPARK",
+      "--speculative-draft-model-path", "/models/Qwen3.8-27B-DSpark",
+      "--speculative-num-draft-tokens", "{block}",
+  ] },
+]
+# Draft block size (tokens verified per step); steps = block - 1 for chain drafts.
+draft = [
+  { label = "b4", block = 4, steps = 3 },
+  { label = "b8", block = 8, steps = 7 },
+]
+mem_fraction = [0.85]                            # --mem-fraction-static
+max_running = [1]                                # --max-running-requests (suites send one request at a time)
+context = [65536]                                # --context-length (long_context needs ~60K)
+thinking = [false, true]                         # chat_template_kwargs.enable_thinking per request
+
+# The draft size means nothing without speculation: keep one "off" point per thinking mode.
+[[exclude]]
+spec = "off"
+draft = "b8"
+
+[select]
+# Fastest point whose quality (mean of suite scores) is at most 1 pp below the
+# no-speculation baseline with thinking off. Other rules:
+#   rule = "max_speed_min_quality", min_quality_pct = 85
+#   rule = "max_quality"
+rule = "max_speed_within_baseline"
+baseline = { spec = "off", thinking = false }
+max_quality_drop_pp = 1.0
+quality = "macro"                                # or "micro": passed / scored over all suites
+
+# ---- base run config (same keys as examples/sglang-q4.toml) ----------------
+
+[base.run]
+quant = "q4"
+
+[base.model]
+name = "qwen3.8-27b"
+file = "/models/Qwen3.8-27B-AWQ"
+quantization = "AWQ-4bit"
+source = "Qwen/Qwen3.8-27B"
+
+[base.runtime]
+name = "sglang"
+version = "0.5.x"
+
+[base.backend]
+base_url = "http://127.0.0.1:30000"
+tokenizer = "openai-tokenize"
+timeout = 1800
+# Thinking on/off is a request field for Qwen chat templates on SGLang.
+extra_body = { chat_template_kwargs = { enable_thinking = "{thinking}" } }
+
+[base.server]
+command = [
+  "python3", "-m", "sglang.launch_server",
+  "--model-path", "/models/Qwen3.8-27B-AWQ",
+  "--served-model-name", "qwen3.8-27b",
+  "--host", "127.0.0.1", "--port", "30000",
+  "--context-length", "{context}",
+  "--mem-fraction-static", "{mem_fraction}",
+  "--max-running-requests", "{max_running}",
+  "{spec_args}",
+]
+stop_signal = "SIGINT"
+stop_timeout = 60
+
+[base.request]
+temperature = 0
+seed = 42
+
+# Recorded in every result (and part of workload_sha256).
+[base.parameters]
+speculative_algorithm = "{spec}"
+draft_block = "{block}"
+context = "{context}"
+thinking = "{thinking}"
+parallel = 1
+
+[base.suites.humaneval]
+executor = "docker"
+docker_image = "python:3.12-slim"
