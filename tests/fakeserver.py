@@ -5,7 +5,8 @@ Used in-process (``FakeServer`` in a thread) and as a subprocess
 
 ``flavor="llama.cpp"`` adds llama.cpp ``timings``; ``flavor="vllm"`` returns
 plain OpenAI responses (usage only). ``speed`` scales the reported decode
-rate and ``variant`` switches a few answers to simulate another host.
+rate and ``variant`` switches a few answers to simulate another host
+(``"sloppy"`` breaks the stability answer, to simulate a lossy setting).
 """
 
 from __future__ import annotations
@@ -72,7 +73,7 @@ def answer(messages: list[dict[str, Any]], payload: dict[str, Any], variant: str
             return f"def get_secret():\n    return {secret.group(1)!r}", None
         return secret.group(1), None
     if last.startswith("Return exactly this text and nothing else"):
-        return "BENCHMARK_OK_42", None
+        return ("BENCHMARK_OK_42" if variant != "sloppy" else "BENCHMARK OK 42"), None
     if "lowercase" in last:
         text = "rain taps softly on the roof. the street shines under grey light."
         return (text if variant != "other" else text + " it keeps falling."), None
@@ -191,8 +192,23 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, required=True)
     parser.add_argument("--flavor", default="llama.cpp")
+    parser.add_argument("--speed", type=float, default=1.0)
+    parser.add_argument("--scale", type=float, default=1.0, help="multiplied into --speed (a second sweep axis)")
+    parser.add_argument("--variant", default="base")
+    parser.add_argument("--crash", action="store_true", help="print an error and exit 3 instead of serving")
+    parser.add_argument("--hang", action="store_true", help="never open the port (health never passes)")
     args = parser.parse_args()
-    server = FakeServer(args.flavor, port=args.port)
+    if args.crash:
+        print("fake: CUDA out of memory while allocating KV cache", file=sys.stderr, flush=True)
+        raise SystemExit(3)
+    if args.hang:
+        import contextlib
+        import time
+
+        with contextlib.suppress(KeyboardInterrupt):
+            time.sleep(3600)
+        return
+    server = FakeServer(args.flavor, speed=args.speed * args.scale, variant=args.variant, port=args.port)
     try:
         server.httpd.serve_forever()
     except KeyboardInterrupt:

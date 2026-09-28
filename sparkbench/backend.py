@@ -8,6 +8,7 @@ token-count endpoint used by the long-context suite.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import signal
@@ -23,6 +24,10 @@ from sparkbench.config import BackendConfig, ServerConfig
 
 class BackendError(RuntimeError):
     """HTTP or protocol failure while talking to the model server."""
+
+
+class ServerStartError(BackendError):
+    """A managed server could not be started or never became healthy."""
 
 
 class ChatBackend(Protocol):
@@ -176,25 +181,41 @@ class ManagedServer:
         self._log = self.log_path.open("w", encoding="utf-8")
         env = dict(os.environ)
         env.update(self.config.env)
-        self.process = subprocess.Popen(
-            self.config.command,
-            stdout=self._log,
-            stderr=subprocess.STDOUT,
-            text=True,
-            cwd=self.config.cwd,
-            env=env,
-        )
-        return self.backend.wait_ready(self.config.ready_timeout, self.process, self.log_path)
+        try:
+            self.process = subprocess.Popen(
+                self.config.command,
+                stdout=self._log,
+                stderr=subprocess.STDOUT,
+                text=True,
+                cwd=self.config.cwd,
+                env=env,
+                # Own process group, so stop() also reaches worker processes
+                # (SGLang/vLLM spawn schedulers that would otherwise keep the port).
+                start_new_session=True,
+            )
+            return self.backend.wait_ready(self.config.ready_timeout, self.process, self.log_path)
+        except OSError as exc:
+            raise ServerStartError(f"cannot start {self.config.command[0]!r}: {exc}") from exc
+        except BackendError as exc:
+            raise ServerStartError(str(exc)) from exc
 
     def stop(self) -> None:
         process = self.process
         if process is not None and process.poll() is None:
-            process.send_signal(getattr(signal, self.config.stop_signal, signal.SIGINT))
+            self._signal(process, getattr(signal, self.config.stop_signal, signal.SIGINT))
             try:
                 process.wait(timeout=self.config.stop_timeout)
             except subprocess.TimeoutExpired:
-                process.kill()
+                self._signal(process, signal.SIGKILL)
                 process.wait(timeout=15)
+        if process is not None:
+            # The leader may be gone while workers still hold GPU memory or the port.
+            self._signal(process, signal.SIGKILL)
         if self._log is not None:
             self._log.close()
             self._log = None
+
+    @staticmethod
+    def _signal(process: subprocess.Popen[str], sig: int) -> None:
+        with contextlib.suppress(ProcessLookupError, PermissionError):
+            os.killpg(process.pid, sig)

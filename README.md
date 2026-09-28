@@ -464,7 +464,7 @@ sparkbench/            harness package (python -m sparkbench ...)
   suites/              the 7 suites and scorers moved from run_benchmark.py, logic unchanged
   importers/           converters for every historical result file
 schemas/result.v1.json JSON Schema of sparkbench.result.v1
-examples/*.toml        run configs: all host paths, model files and server flags live here
+examples/*.toml        run and sweep configs: all host paths, model files and server flags live here
 results/v1/            historical results converted to v1 (28 files; sources untouched)
 tests/                 pytest suite: fake OpenAI server, scorer fixtures, README regression
 ```
@@ -475,6 +475,7 @@ tests/                 pytest suite: fake OpenAI server, scorer fixtures, README
 python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml             # all 7 suites
 python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml --smoke     # 2-3 cases per suite
 python -m sparkbench run --config X.toml --suite tools --suite stability_100      # selected suites
+python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml             # parameter grid, see "Sweep"
 python -m sparkbench report A.json B.json [--out report.md] [--json summary.json] # paired A/B report
 python -m sparkbench compare-hosts A.json B.json [--out hosts.md] [--fail-on-diff]
 python -m sparkbench validate results/v1/*.json
@@ -560,6 +561,78 @@ python -m sparkbench compare-hosts results/runs/spark1-q4.json results/runs/spar
 ```
 
 The comparison reports decode and prefill tok/s per suite with the B/A delta and the median per-case ratio, then checks answer identity case by case: identical outputs, differences that change a number in the answer (listed separately with the numbers only on one side and the final number on each side), text-only differences, and pass/fail flips. `--fail-on-diff` returns exit code 1 if any paired answer differs.
+
+### Sweep
+
+`sweep` runs one config over a grid of server and request parameters (speculative algorithm, draft block size, `--mem-fraction-static`, `--max-running-requests`, context length, thinking on/off, ...). For every grid point it substitutes the values into the base config, starts the server from `[server] command`, waits for `/health` up to `ready_timeout`, runs the suites through the normal `run` path and stops the server (the whole process group, so worker processes do not keep the port). [`examples/sweep-qwen38-sglang.toml`](examples/sweep-qwen38-sglang.toml) sweeps SGLang with no speculation, MTP (NEXTN), EAGLE3, DFLASH and DSPARK, two draft block sizes and thinking on/off: 18 points.
+
+```bash
+python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --dry-run      # points, commands, what would run
+python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --smoke        # 2-3 cases per suite
+python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml                # run or resume
+python -m sparkbench sweep --config examples/sweep-qwen38-sglang.toml --report-only  # rebuild the report
+```
+
+A sweep file has a base run config (inline `[base.*]` tables, or `[sweep] base_config = "file.toml"` relative to the sweep file), a grid, and a selection rule:
+
+```toml
+[sweep]
+name = "qwen38-sglang"
+output_dir = "results/sweeps/qwen38-sglang"
+suites = ["gsm8k", "ifeval", "tools", "long_context"]   # overrides [run] suites
+ready_timeout = 1500                                    # per point, seconds
+
+[grid]
+spec = [
+  { label = "off", spec_args = [] },
+  { label = "mtp", spec_args = ["--speculative-algorithm", "NEXTN", "--speculative-num-draft-tokens", "{block}"] },
+]
+draft = [{ label = "b4", block = 4, steps = 3 }, { label = "b8", block = 8, steps = 7 }]
+mem_fraction = [0.85]
+thinking = [false, true]
+
+[[exclude]]                  # skip combinations; a list value means "any of"
+spec = "off"
+draft = "b8"
+
+[select]
+rule = "max_speed_within_baseline"
+baseline = { spec = "off", thinking = false }
+max_quality_drop_pp = 1.0
+
+[base.server]
+command = ["python3", "-m", "sglang.launch_server", "--mem-fraction-static", "{mem_fraction}", "{spec_args}"]
+
+[base.backend]
+base_url = "http://127.0.0.1:30000"
+extra_body = { chat_template_kwargs = { enable_thinking = "{thinking}" } }
+```
+
+Substitution rules:
+
+- Each grid axis defines a placeholder `{axis}`. A grid value can be a scalar or a table with a `label`; the label names the point and the table's other keys become placeholders too (`{spec_args}`, `{block}` above).
+- A string that is exactly `"{name}"` keeps the value's TOML type: `enable_thinking = "{thinking}"` becomes a boolean, and a list is spliced into the enclosing list (`"{spec_args}"` in the command). Inside a longer string, the value is formatted as text (booleans as `true`/`false`). `[server] command` items are always converted to strings.
+- Unknown placeholders are an error. Write `{{` and `}}` for literal braces. `{point}` is the point id.
+- `[[exclude]]` removes grid combinations, and `[[include]]` adds points outside the grid. An include gives every axis; a table-valued axis takes an existing label or a full table.
+
+Output in `output_dir`:
+
+- `points/<id>.json`: `sparkbench.result.v1` of the point. The id is `axis-value__axis-value...`. The grid values are recorded in `parameters.sweep_point` and so are part of `workload_sha256`.
+- `points/<id>.server.log`: server stdout/stderr.
+- `points/<id>.failed.json` (`sparkbench.sweep_failure.v1`): written when the server exits, never answers `/health` in time, or the run fails. It holds the stage (`server_start`, `run` or `invalid_result`), the error and traceback, the command and the last 4 KB of the server log. The sweep moves on to the next point, and the exit code is 1 when any point failed.
+- `report.md` and `report.json` (`sparkbench.sweep_report.v1`): the report.
+
+Resume: re-running the command skips a point when a result exists that validates against the schema, is complete, covers the requested suites and has the same `workload_sha256` and smoke mode. Failed and missing points run again, and an interrupted point resumes from its `.raw.json` checkpoint. Any change to grid values, `[parameters]`, the model, the request settings or `extra_body` changes the hash and re-runs the point. `workload_sha256` does not cover the server command, because it holds host paths. After editing a flag that no grid axis controls, use `--fresh` or record the flag in `[parameters]`. Before each start, the sweep checks that nothing already answers the health URL, so a previous server that is still shutting down is never benchmarked by mistake.
+
+The report has a table of points: grid values, status, quality, per-suite quality, overall weighted decode tok/s, draft acceptance, and delta against the reference point. It also lists the Pareto front over quality × tok/s (points that no other point beats on both), the recommended point with the rule written out, and the failed points with their last log line. Quality is the mean of the suite `quality` scores (`quality = "micro"` gives passed/scored cases over all suites). Rules:
+
+| `rule` | Chooses |
+|---|---|
+| `max_speed_within_baseline` (default) | highest tok/s among points whose quality is at most `max_quality_drop_pp` below the `baseline` point (a table of axis values that matches exactly one point, or `"best"` for the best-quality point) |
+| `max_speed_min_quality` | highest tok/s among points with quality >= `min_quality_pct` |
+| `max_quality` | highest quality, ties broken by tok/s |
+
+Only measured points are ranked. If the baseline point failed, the report gives no recommendation and says why. With SGLang/vLLM, tok/s is wall-clock based (see above). The sweep compares points on one runtime, so this is consistent within a sweep.
 
 ### Result format `sparkbench.result.v1`
 

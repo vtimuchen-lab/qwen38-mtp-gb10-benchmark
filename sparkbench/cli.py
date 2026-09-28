@@ -1,4 +1,4 @@
-"""Command line: ``python -m sparkbench {run,report,compare-hosts,validate,import}``."""
+"""Command line: ``python -m sparkbench {run,sweep,report,compare-hosts,validate,import}``."""
 
 from __future__ import annotations
 
@@ -50,6 +50,28 @@ def cmd_run(args: argparse.Namespace) -> int:
     errors = validate(read_json(path))
     print(f"wrote {path} ({'valid' if not errors else f'{len(errors)} schema errors'})")
     return 0 if not errors else 1
+
+
+def cmd_sweep(args: argparse.Namespace) -> int:
+    from sparkbench.sweep import describe_plan, load_sweep, run_sweep, write_report
+
+    smoke = True if args.smoke else None
+    try:
+        sweep = load_sweep(args.config)
+        if args.dry_run:
+            sys.stdout.write(describe_plan(sweep, smoke))
+            return 0
+        outcomes = [] if args.report_only else run_sweep(sweep, smoke=smoke, fresh=args.fresh)
+        markdown, summary, report = write_report(sweep, smoke)
+    except (ConfigError, OSError) as exc:
+        print(f"sweep config error: {exc}", file=sys.stderr)
+        return 2
+    counts = report["counts"]
+    chosen = report["selection"]["chosen"]
+    print(f"wrote {markdown} and {summary}: {counts['done']} done, {counts['failed']} failed, {counts['pending']} pending")
+    print(f"recommended: {chosen}" if chosen else f"no recommendation: {report['selection']['reason']}")
+    failed_now = any(outcome.status == "failed" for outcome in outcomes)
+    return 1 if failed_now or (args.report_only and counts["failed"]) else 0
 
 
 def cmd_report(args: argparse.Namespace) -> int:
@@ -114,6 +136,14 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--output", help="override [run] output")
     run.add_argument("--fresh", action="store_true", help="ignore an existing checkpoint instead of resuming")
     run.set_defaults(func=cmd_run)
+
+    sweep = sub.add_parser("sweep", help="run a parameter grid (one managed server per point) and rank the points")
+    sweep.add_argument("--config", required=True, help="sweep TOML (see examples/sweep-qwen38-sglang.toml)")
+    sweep.add_argument("--smoke", action="store_true", help="2-3 cases per suite (overrides [sweep] smoke)")
+    sweep.add_argument("--fresh", action="store_true", help="re-run every point, ignoring existing results")
+    sweep.add_argument("--dry-run", action="store_true", help="print the points and server commands, run nothing")
+    sweep.add_argument("--report-only", action="store_true", help="rebuild report.md/report.json from existing results")
+    sweep.set_defaults(func=cmd_sweep)
 
     report = sub.add_parser("report", help="paired A/B report (quality, tok/s, deltas, McNemar)")
     report.add_argument("a")
