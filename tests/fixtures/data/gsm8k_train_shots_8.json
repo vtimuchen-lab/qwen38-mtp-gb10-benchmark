@@ -1,0 +1,10 @@
+[
+ {
+  "question": "Ann had 5 pens and lost 2. How many are left?",
+  "answer": "5 - 2 = <<5-2=3>>3\n#### 3"
+ },
+ {
+  "question": "A box has 4 rows of 6 eggs. How many eggs?",
+  "answer": "4 * 6 = <<4*6=24>>24\n#### 24"
+ }
+]

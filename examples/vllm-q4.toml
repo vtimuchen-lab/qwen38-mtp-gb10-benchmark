@@ -1,0 +1,47 @@
+# vLLM serving the same model through its OpenAI-compatible API.
+#
+#   python -m sparkbench run --config examples/vllm-q4.toml --suite tools --suite stability_100
+#
+# Like SGLang, vLLM returns no llama.cpp `timings`; tok/s comes from usage and
+# wall time (timing_source = "wall"). Placeholders: adjust paths/flags first.
+
+[run]
+label = "vllm-q4"
+quant = "q4"
+output = "results/runs/vllm-q4.json"
+
+[model]
+name = "qwen3.8-27b"
+file = "/models/Qwen3.8-27B-AWQ"
+quantization = "AWQ-4bit"
+source = "Qwen/Qwen3.8-27B"
+
+[runtime]
+name = "vllm"
+version = "0.x"                          # overwritten by GET /version when reachable
+
+[backend]
+base_url = "http://127.0.0.1:8000"
+tokenizer = "openai-tokenize"
+api_key_env = "VLLM_API_KEY"             # only if the server was started with --api-key
+extra_body = {}
+
+[server]
+command = [
+  "vllm", "serve", "/models/Qwen3.8-27B-AWQ",
+  "--served-model-name", "qwen3.8-27b",
+  "--host", "127.0.0.1", "--port", "8000",
+  "--max-model-len", "65536",
+  "--max-num-seqs", "1",
+  "--speculative-config", '{"method": "mtp", "num_speculative_tokens": 7}',
+]
+ready_timeout = 1800
+
+[request]
+temperature = 0
+seed = 42
+
+[parameters]
+mtp_depth = 7
+context = 65536
+parallel = 1

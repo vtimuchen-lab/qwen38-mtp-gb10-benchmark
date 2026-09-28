@@ -1,0 +1,663 @@
+{
+  "schema": "sparkbench.result.v1",
+  "label": "compare-q6-mtp7",
+  "quant": "q6",
+  "model": {
+    "name": "qwen3.8-MTP:27b-q6",
+    "file": "/usr/share/ollama/.ollama/models/blobs/sha256-739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+    "sha256": "739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+    "quantization": "UD-Q6_K_XL",
+    "source": "unsloth/Qwen3.8-27B-GGUF"
+  },
+  "runtime": {
+    "name": "llama.cpp",
+    "version": "d2f83055d6e3b379b5d34c4837122a918cf402c2",
+    "binary": null
+  },
+  "backend": {
+    "kind": "openai",
+    "base_url": "http://127.0.0.1:18082",
+    "api": "/v1/chat/completions",
+    "managed_server": true,
+    "tokenizer": "llama.cpp",
+    "extra_body": {
+      "cache_prompt": false
+    }
+  },
+  "host": {
+    "name": null,
+    "gpu": "NVIDIA GB10",
+    "driver": "580.173.02",
+    "arch": "aarch64",
+    "kernel": "6.17.0-1029-nvidia",
+    "os": null,
+    "cpus": 20,
+    "source": "README.md 'Test system' table (legacy import; hostname was not recorded)"
+  },
+  "parameters": {
+    "mtp_depth": 7,
+    "temperature": 0,
+    "seed": 42,
+    "context": 69632,
+    "parallel": 1,
+    "kv_k": "q8_0",
+    "kv_v": "q8_0"
+  },
+  "config_sha256": "95a10f7ef5c377b9f66660ab2e7e13d1eeda4af4f69bdbae590cae8ff4c2a0fd",
+  "workload_sha256": "909acf4a0bd2932d19a91faf82988e01a905e9a618aafdb8b8707fa09b9eeb53",
+  "config": {
+    "run": {
+      "label": "compare-q6-mtp7",
+      "quant": "q6"
+    },
+    "model": {
+      "name": "qwen3.8-MTP:27b-q6",
+      "file": "/usr/share/ollama/.ollama/models/blobs/sha256-739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+      "sha256": "739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+      "quantization": "UD-Q6_K_XL",
+      "source": "unsloth/Qwen3.8-27B-GGUF"
+    },
+    "runtime": {
+      "name": "llama.cpp",
+      "binary": null
+    },
+    "backend": {
+      "base_url": "http://127.0.0.1:18082",
+      "tokenizer": "llama.cpp",
+      "extra_body": {
+        "cache_prompt": false
+      }
+    },
+    "server": {
+      "command": [
+        "llama-server",
+        "--model",
+        "/usr/share/ollama/.ollama/models/blobs/sha256-739202186fd9389bb58497c58b56c8a0d4253d99d20131e6a0427e363e678fc8",
+        "--alias",
+        "qwen3.8-MTP:27b-q6",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "18082",
+        "--no-webui",
+        "--offline",
+        "--ctx-size",
+        "69632",
+        "--parallel",
+        "1",
+        "--gpu-layers",
+        "all",
+        "--fit",
+        "off",
+        "--flash-attn",
+        "on",
+        "--cache-type-k",
+        "q8_0",
+        "--cache-type-v",
+        "q8_0",
+        "--batch-size",
+        "2048",
+        "--ubatch-size",
+        "2048",
+        "--jinja",
+        "--reasoning",
+        "off",
+        "--reasoning-budget",
+        "0",
+        "--reasoning-format",
+        "deepseek",
+        "--spec-type",
+        "draft-mtp",
+        "--spec-draft-n-max",
+        "7",
+        "--spec-draft-ngl",
+        "all",
+        "--log-verbosity",
+        "2"
+      ]
+    },
+    "request": {
+      "temperature": 0,
+      "seed": 42
+    },
+    "parameters": {
+      "mtp_depth": 7,
+      "context": 69632,
+      "parallel": 1,
+      "kv_k": "q8_0",
+      "kv_v": "q8_0"
+    },
+    "workload": "predictable_9"
+  },
+  "source": {
+    "tool": "sparkbench 1.0.0",
+    "kind": "import",
+    "importer": "sweeps",
+    "files": [
+      {
+        "path": "q4_q6_compare/results.json",
+        "sha256": "48c3b62fd1a4925611bafb33da6773d6590459375f23b3b1fa92ca96c6653d2e"
+      }
+    ],
+    "notes": [
+      "Qwen3.8-27B UD-Q4_K_XL vs UD-Q6_K_XL, MTP7",
+      "Q4 side of this comparison is mtp_sweep mode mtp7 (results/v1/mtp_sweep_q4_mtp7.json)"
+    ]
+  },
+  "timings": {
+    "started_at_utc": "2026-08-17T04:32:12Z",
+    "completed_at_utc": "2026-08-17T04:43:45Z",
+    "wall_seconds": 687.7687871229864
+  },
+  "smoke": false,
+  "complete": true,
+  "suites": {
+    "predictable_9": {
+      "description": "Predictable 8K/32K/64K sweep: sequence, strict JSON and Python code at three context sizes",
+      "complete": true,
+      "quality": 1.0,
+      "quality_label": "exact",
+      "verdicts": {
+        "pass": 9,
+        "fail": 0,
+        "error": 0,
+        "unscored": 0
+      },
+      "metrics": {
+        "passed": 9,
+        "total": 9,
+        "legacy_aggregate": {
+          "passed": 9,
+          "total": 9,
+          "all_passed": true,
+          "prompt_tokens": 310227,
+          "prompt_seconds": 561.5467530000001,
+          "prompt_tokens_per_second": 552.4508838180388,
+          "generated_tokens": 3583,
+          "decode_seconds": 125.829824,
+          "decode_tokens_per_second": 28.4749663164116,
+          "median_case_decode_tokens_per_second": 26.52049818813751,
+          "minimum_case_decode_tokens_per_second": 20.84886863614346,
+          "wall_seconds": 687.7687871229864,
+          "draft_generated": 3304,
+          "draft_accepted": 3122,
+          "draft_acceptance": 0.9449152542372882,
+          "max_server_rss_mib": 3697.30078125
+        },
+        "by_context": {
+          "8k": {
+            "passed": 3,
+            "total": 3,
+            "all_passed": true,
+            "prompt_tokens": 23407,
+            "prompt_seconds": 34.874114999999996,
+            "prompt_tokens_per_second": 671.1854910153277,
+            "generated_tokens": 1166,
+            "decode_seconds": 36.867813999999996,
+            "decode_tokens_per_second": 31.62650218426295,
+            "median_case_decode_tokens_per_second": 28.800365293360517,
+            "minimum_case_decode_tokens_per_second": 20.84886863614346,
+            "wall_seconds": 71.85254767499282,
+            "draft_generated": 1085,
+            "draft_accepted": 1016,
+            "draft_acceptance": 0.936405529953917,
+            "max_server_rss_mib": 3170.90625
+          },
+          "32k": {
+            "passed": 3,
+            "total": 3,
+            "all_passed": true,
+            "prompt_tokens": 95419,
+            "prompt_seconds": 171.52998300000002,
+            "prompt_tokens_per_second": 556.2817551261577,
+            "generated_tokens": 1208,
+            "decode_seconds": 41.57703,
+            "decode_tokens_per_second": 29.054504374170065,
+            "median_case_decode_tokens_per_second": 27.095885565043297,
+            "minimum_case_decode_tokens_per_second": 25.95915845600117,
+            "wall_seconds": 213.21473293399322,
+            "draft_generated": 1106,
+            "draft_accepted": 1053,
+            "draft_acceptance": 0.9520795660036167,
+            "max_server_rss_mib": 3421.77734375
+          },
+          "64k": {
+            "passed": 3,
+            "total": 3,
+            "all_passed": true,
+            "prompt_tokens": 191401,
+            "prompt_seconds": 355.14265500000005,
+            "prompt_tokens_per_second": 538.9411756242008,
+            "generated_tokens": 1209,
+            "decode_seconds": 47.384980000000006,
+            "decode_tokens_per_second": 25.514414061164526,
+            "median_case_decode_tokens_per_second": 24.118057893388137,
+            "minimum_case_decode_tokens_per_second": 22.41301114849543,
+            "wall_seconds": 402.70150651400036,
+            "draft_generated": 1113,
+            "draft_accepted": 1053,
+            "draft_acceptance": 0.9460916442048517,
+            "max_server_rss_mib": 3697.30078125
+          }
+        },
+        "exact_matches_with_q4": 8,
+        "semantic_matches_with_q4": 9
+      },
+      "aggregate": {
+        "cases": 9,
+        "prompt_tokens": 310227,
+        "prompt_tokens_per_second": 552.4508838180388,
+        "generated_tokens": 3583,
+        "decode_tokens_per_second": 28.4749663164116,
+        "median_case_decode_tokens_per_second": 26.52049818813751,
+        "wall_seconds": 687.7687871229864,
+        "draft_generated": 3304,
+        "draft_accepted": 3122,
+        "draft_acceptance": 0.9449152542372882
+      },
+      "timing_source": "server",
+      "cases": [
+        {
+          "id": "8k_predictable_sequence",
+          "verdict": "pass",
+          "prompt_sha256": "141d16d1af8a2c9d7092f9adc8e6ff66fe0b5249e0dafdb54f70cd8f191ab54c",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 7803,
+            "generated": 916,
+            "draft_generated": 819,
+            "draft_accepted": 802
+          },
+          "time": {
+            "wall_seconds": 39.38272870799847,
+            "prompt_ms": 11500.931,
+            "decode_ms": 27790.095
+          },
+          "tok_s": {
+            "prompt": 678.4668128171536,
+            "decode": 32.9613842629901
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256",
+          "content_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3",
+          "detail": {
+            "context": "8k",
+            "workload": "predictable_sequence",
+            "target_prompt_tokens": 7800,
+            "raw_prompt_tokens": 7791,
+            "server_rss_mib": 3167.04296875,
+            "score": {
+              "passed": true,
+              "strict_format": true,
+              "expected_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3"
+            }
+          }
+        },
+        {
+          "id": "8k_structured_json",
+          "verdict": "pass",
+          "prompt_sha256": "418582a2895000891efb9a8b1ef87b6830a532817d510a7f67061db33cb6b657",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 7797,
+            "generated": 30,
+            "draft_generated": 42,
+            "draft_accepted": 27
+          },
+          "time": {
+            "wall_seconds": 13.16130168199743,
+            "prompt_ms": 11712.604,
+            "decode_ms": 1438.927
+          },
+          "tok_s": {
+            "prompt": 665.6931285305983,
+            "decode": 20.84886863614346
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "[{\"id\":\"A\",\"owner\":\"Ирина\"},{\"id\":\"E\",\"owner\":\"Marta\"},{\"id\":\"C\",\"owner\":\"李\"}]",
+          "content_sha256": "5d3b49a5bdc951437229348138eb1b9b92929f82695d7e9ac56519342c568cf7",
+          "detail": {
+            "context": "8k",
+            "workload": "structured_json",
+            "target_prompt_tokens": 7800,
+            "raw_prompt_tokens": 7785,
+            "server_rss_mib": 3168.28125,
+            "score": {
+              "passed": true,
+              "strict_json": true,
+              "parse_error": null,
+              "expected": [
+                {
+                  "id": "A",
+                  "owner": "Ирина"
+                },
+                {
+                  "id": "E",
+                  "owner": "Marta"
+                },
+                {
+                  "id": "C",
+                  "owner": "李"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "8k_python_code",
+          "verdict": "pass",
+          "prompt_sha256": "511608c466042a59497967e2bee8f2a763b2378f72e86a366d2466e1ff3ab046",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 7807,
+            "generated": 220,
+            "draft_generated": 224,
+            "draft_accepted": 187
+          },
+          "time": {
+            "wall_seconds": 19.308517284996924,
+            "prompt_ms": 11660.58,
+            "decode_ms": 7638.792
+          },
+          "tok_s": {
+            "prompt": 669.5207270993382,
+            "decode": 28.800365293360517
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "def summarize(rows: list[dict]) -> list[dict]:\n    groups = {}\n    for row in rows:\n        if row.get(\"enabled\") is not True:\n            continue\n        owner = row.get(\"owner\")\n        if not isinstance(owner, str):\n            continue\n        amount = row.get(\"amount\")\n        try:\n            amount_val = float(amount)\n        except (ValueError, TypeError):\n            continue\n        if owner not in groups:\n            groups[owner] = {\"count\": 0, \"total\": 0.0}\n        groups[owner][\"count\"] += 1\n        groups[owner][\"total\"] += amount_val\n    \n    result = []\n    for owner, data in groups.items():\n        result.append({\n            \"owner\": owner,\n            \"count\": data[\"count\"],\n            \"total\": round(data[\"total\"], 2)\n        })\n    \n    result.sort(key=lambda x: (-x[\"total\"], x[\"owner\"]))\n    return result",
+          "content_sha256": "aca4ede2671bfcfa47a4d2c0c7564166323eb1a7fcda1cc82657638acacb3212",
+          "detail": {
+            "context": "8k",
+            "workload": "python_code",
+            "target_prompt_tokens": 7800,
+            "raw_prompt_tokens": 7795,
+            "server_rss_mib": 3170.90625,
+            "score": {
+              "passed": true,
+              "strict_source_only": true,
+              "syntax_error": null,
+              "function_names": [
+                "summarize"
+              ]
+            }
+          }
+        },
+        {
+          "id": "32k_predictable_sequence",
+          "verdict": "pass",
+          "prompt_sha256": "263768602fe2b5d5d14d677477253e032068b1ed6861521a895d77ac04769689",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 31807,
+            "generated": 916,
+            "draft_generated": 812,
+            "draft_accepted": 801
+          },
+          "time": {
+            "wall_seconds": 81.790412852999,
+            "prompt_ms": 51303.6,
+            "decode_ms": 30444.949
+          },
+          "tok_s": {
+            "prompt": 619.9759860906447,
+            "decode": 30.08709260770974
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256",
+          "content_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3",
+          "detail": {
+            "context": "32k",
+            "workload": "predictable_sequence",
+            "target_prompt_tokens": 31800,
+            "raw_prompt_tokens": 31795,
+            "server_rss_mib": 3412.84765625,
+            "score": {
+              "passed": true,
+              "strict_format": true,
+              "expected_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3"
+            }
+          }
+        },
+        {
+          "id": "32k_structured_json",
+          "verdict": "pass",
+          "prompt_sha256": "469f187f9b51c2fd14736b4baa7d78774fdc442ad91e6780634b26a15f7b978a",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 31801,
+            "generated": 72,
+            "draft_generated": 70,
+            "draft_accepted": 65
+          },
+          "time": {
+            "wall_seconds": 54.259289623994846,
+            "prompt_ms": 51576.199,
+            "decode_ms": 2657.23
+          },
+          "tok_s": {
+            "prompt": 616.5828544286484,
+            "decode": 27.095885565043297
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "[\n  {\n    \"id\": \"A\",\n    \"owner\": \"Ирина\"\n  },\n  {\n    \"id\": \"E\",\n    \"owner\": \"Marta\"\n  },\n  {\n    \"id\": \"C\",\n    \"owner\": \"李\"\n  }\n]",
+          "content_sha256": "5970c9759cdf35596042fc0236ab8402855f4c867df6e367bbf0bbd5ba0f94cb",
+          "detail": {
+            "context": "32k",
+            "workload": "structured_json",
+            "target_prompt_tokens": 31800,
+            "raw_prompt_tokens": 31789,
+            "server_rss_mib": 3417.7421875,
+            "score": {
+              "passed": true,
+              "strict_json": true,
+              "parse_error": null,
+              "expected": [
+                {
+                  "id": "A",
+                  "owner": "Ирина"
+                },
+                {
+                  "id": "E",
+                  "owner": "Marta"
+                },
+                {
+                  "id": "C",
+                  "owner": "李"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "32k_python_code",
+          "verdict": "pass",
+          "prompt_sha256": "c216640578a7dbd9824fc64b0dc80738b24d55ec0da78ece6368b57f1b6796a2",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 31811,
+            "generated": 220,
+            "draft_generated": 224,
+            "draft_accepted": 187
+          },
+          "time": {
+            "wall_seconds": 77.16503045699938,
+            "prompt_ms": 68650.184,
+            "decode_ms": 8474.851
+          },
+          "tok_s": {
+            "prompt": 463.37821905910704,
+            "decode": 25.95915845600117
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "def summarize(rows: list[dict]) -> list[dict]:\n    groups = {}\n    for row in rows:\n        if row.get(\"enabled\") is not True:\n            continue\n        owner = row.get(\"owner\")\n        if not isinstance(owner, str):\n            continue\n        amount = row.get(\"amount\")\n        try:\n            amount_val = float(amount)\n        except (ValueError, TypeError):\n            continue\n        if owner not in groups:\n            groups[owner] = {\"count\": 0, \"total\": 0.0}\n        groups[owner][\"count\"] += 1\n        groups[owner][\"total\"] += amount_val\n    \n    result = []\n    for owner, data in groups.items():\n        result.append({\n            \"owner\": owner,\n            \"count\": data[\"count\"],\n            \"total\": round(data[\"total\"], 2)\n        })\n    \n    result.sort(key=lambda x: (-x[\"total\"], x[\"owner\"]))\n    return result",
+          "content_sha256": "aca4ede2671bfcfa47a4d2c0c7564166323eb1a7fcda1cc82657638acacb3212",
+          "detail": {
+            "context": "32k",
+            "workload": "python_code",
+            "target_prompt_tokens": 31800,
+            "raw_prompt_tokens": 31799,
+            "server_rss_mib": 3421.77734375,
+            "score": {
+              "passed": true,
+              "strict_source_only": true,
+              "syntax_error": null,
+              "function_names": [
+                "summarize"
+              ]
+            }
+          }
+        },
+        {
+          "id": "64k_predictable_sequence",
+          "verdict": "pass",
+          "prompt_sha256": "f5a2ce058de7571692a40a6749ab36183c3d373bd4a7787787889b07edc48d68",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 63801,
+            "generated": 916,
+            "draft_generated": 812,
+            "draft_accepted": 803
+          },
+          "time": {
+            "wall_seconds": 151.1494206139978,
+            "prompt_ms": 116562.571,
+            "decode_ms": 34539.321
+          },
+          "tok_s": {
+            "prompt": 547.3540901907526,
+            "decode": 26.52049818813751
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256",
+          "content_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3",
+          "detail": {
+            "context": "64k",
+            "workload": "predictable_sequence",
+            "target_prompt_tokens": 63800,
+            "raw_prompt_tokens": 63789,
+            "server_rss_mib": 3678.16796875,
+            "score": {
+              "passed": true,
+              "strict_format": true,
+              "expected_sha256": "9a87b35ebf8757b50c09002b080f04343fb7482dfc78f45a123bd3e03a70a0c3"
+            }
+          }
+        },
+        {
+          "id": "64k_structured_json",
+          "verdict": "pass",
+          "prompt_sha256": "42e969e49ac8a0db2180e87d3771089eb745da412ade64ef7346fdfb01dac6ca",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 63795,
+            "generated": 72,
+            "draft_generated": 70,
+            "draft_accepted": 63
+          },
+          "time": {
+            "wall_seconds": 121.25314778499887,
+            "prompt_ms": 118194.054,
+            "decode_ms": 2985.315
+          },
+          "tok_s": {
+            "prompt": 539.7479639711826,
+            "decode": 24.118057893388137
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "[\n  {\n    \"id\": \"A\",\n    \"owner\": \"Ирина\"\n  },\n  {\n    \"id\": \"E\",\n    \"owner\": \"Marta\"\n  },\n  {\n    \"id\": \"C\",\n    \"owner\": \"李\"\n  }\n]",
+          "content_sha256": "5970c9759cdf35596042fc0236ab8402855f4c867df6e367bbf0bbd5ba0f94cb",
+          "detail": {
+            "context": "64k",
+            "workload": "structured_json",
+            "target_prompt_tokens": 63800,
+            "raw_prompt_tokens": 63783,
+            "server_rss_mib": 3687.93359375,
+            "score": {
+              "passed": true,
+              "strict_json": true,
+              "parse_error": null,
+              "expected": [
+                {
+                  "id": "A",
+                  "owner": "Ирина"
+                },
+                {
+                  "id": "E",
+                  "owner": "Marta"
+                },
+                {
+                  "id": "C",
+                  "owner": "李"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "64k_python_code",
+          "verdict": "pass",
+          "prompt_sha256": "0d934ec11c06e3b5b33f6765f62690f6472635719d3550c1421f230a867366cb",
+          "api_calls": 1,
+          "tokens": {
+            "prompt": 63805,
+            "generated": 221,
+            "draft_generated": 231,
+            "draft_accepted": 187
+          },
+          "time": {
+            "wall_seconds": 130.2989381150037,
+            "prompt_ms": 120386.03,
+            "decode_ms": 9860.344
+          },
+          "tok_s": {
+            "prompt": 530.0033567017701,
+            "decode": 22.41301114849543
+          },
+          "timing_source": "server",
+          "finish_reason": "stop",
+          "content": "def summarize(rows: list[dict]) -> list[dict]:\n    groups = {}\n    for row in rows:\n        if row.get(\"enabled\") is not True:\n            continue\n        \n        owner = row.get(\"owner\")\n        if not isinstance(owner, str):\n            continue\n            \n        amount = row.get(\"amount\")\n        try:\n            amount_val = float(amount)\n        except (ValueError, TypeError):\n            continue\n            \n        if owner not in groups:\n            groups[owner] = {\"count\": 0, \"total\": 0.0}\n            \n        groups[owner][\"count\"] += 1\n        groups[owner][\"total\"] += amount_val\n        \n    result = []\n    for owner, data in groups.items():\n        result.append({\n            \"owner\": owner,\n            \"count\": data[\"count\"],\n            \"total\": round(data[\"total\"], 2)\n        })\n        \n    result.sort(key=lambda x: (-x[\"total\"], x[\"owner\"]))\n    return result",
+          "content_sha256": "8cc3efdd778173a8d38c9ea792827b0dc981207049463bb754916850f5fae11f",
+          "detail": {
+            "context": "64k",
+            "workload": "python_code",
+            "target_prompt_tokens": 63800,
+            "raw_prompt_tokens": 63793,
+            "server_rss_mib": 3697.30078125,
+            "score": {
+              "passed": true,
+              "strict_source_only": true,
+              "syntax_error": null,
+              "function_names": [
+                "summarize"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "overall": {
+    "cases": 9,
+    "api_calls": 9,
+    "prompt_tokens": 310227,
+    "generated_tokens": 3583,
+    "decode_tokens_per_second": 28.4749663164116,
+    "wall_seconds": 687.7687871229864,
+    "draft_generated": 3304,
+    "draft_accepted": 3122,
+    "draft_acceptance": 0.9449152542372882
+  },
+  "extra": {
+    "series": "q4_q6_compare",
+    "mode": "q6_mtp7",
+    "q4_results_source": "/home/admin/qwen38_mtp_sweep_20260817/results.json"
+  }
+}

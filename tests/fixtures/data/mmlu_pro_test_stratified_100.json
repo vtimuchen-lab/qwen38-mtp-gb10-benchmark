@@ -1,0 +1,48 @@
+[
+ {
+  "question_id": 70,
+  "question": "Which gas makes up most of Earth's atmosphere?",
+  "options": [
+   "Oxygen",
+   "Nitrogen",
+   "Argon",
+   "Carbon dioxide"
+  ],
+  "answer": "B",
+  "answer_index": 1,
+  "category": "chemistry",
+  "cot_content": "",
+  "src": "fixture"
+ },
+ {
+  "question_id": 71,
+  "question": "What is 7 * 8?",
+  "options": [
+   "54",
+   "56",
+   "58",
+   "64",
+   "48"
+  ],
+  "answer": "B",
+  "answer_index": 1,
+  "category": "math",
+  "cot_content": "",
+  "src": "fixture"
+ },
+ {
+  "question_id": 72,
+  "question": "What is the derivative of x^2?",
+  "options": [
+   "x",
+   "2",
+   "2x",
+   "x^2/2"
+  ],
+  "answer": "C",
+  "answer_index": 2,
+  "category": "math",
+  "cot_content": "",
+  "src": "fixture"
+ }
+]

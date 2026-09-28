@@ -1,0 +1,64 @@
+# SGLang serving the same model through its OpenAI-compatible API.
+#
+#   python -m sparkbench run --config examples/sglang-q4.toml --smoke
+#
+# SGLang has no llama.cpp `timings` block, so decode tok/s is derived from
+# usage.completion_tokens / request wall time (timing_source = "wall"; it
+# includes prefill) and draft/MTP acceptance is not reported. Compare SGLang
+# runs with SGLang runs; use llama.cpp numbers only as a rough reference.
+#
+# The paths, model id and speculative flags below are placeholders: adjust
+# them for your SGLang version and checkpoint before the first run.
+
+[run]
+label = "sglang-q4"
+quant = "q4"
+output = "results/runs/sglang-q4.json"
+
+[model]
+name = "qwen3.8-27b"                     # --served-model-name
+file = "/models/Qwen3.8-27B-AWQ"         # informational (directory or file)
+quantization = "AWQ-4bit"
+source = "Qwen/Qwen3.8-27B"
+
+[runtime]
+name = "sglang"
+version = "0.5.x"                        # overwritten by /get_server_info when reachable
+
+[backend]
+base_url = "http://127.0.0.1:30000"
+tokenizer = "openai-tokenize"            # POST /tokenize {"model", "prompt"}
+health_path = "/health"
+timeout = 1800
+extra_body = {}                          # no llama.cpp-only fields
+
+# Optional managed server; delete this table to benchmark a running server.
+[server]
+command = [
+  "python3", "-m", "sglang.launch_server",
+  "--model-path", "/models/Qwen3.8-27B-AWQ",
+  "--served-model-name", "qwen3.8-27b",
+  "--host", "127.0.0.1", "--port", "30000",
+  "--context-length", "65536",
+  "--max-running-requests", "1",
+  # MTP / NEXTN speculative decoding (check flag names for your version):
+  "--speculative-algorithm", "NEXTN",
+  "--speculative-num-steps", "7",
+  "--speculative-eagle-topk", "1",
+  "--speculative-num-draft-tokens", "8",
+]
+ready_timeout = 1200
+stop_signal = "SIGINT"
+
+[request]
+temperature = 0
+seed = 42
+
+[parameters]
+mtp_depth = 7
+context = 65536
+parallel = 1
+
+[suites.humaneval]
+executor = "docker"
+docker_image = "python:3.12-slim"

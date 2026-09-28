@@ -1,0 +1,44 @@
+[project]
+name = "sparkbench"
+version = "1.0.0"
+description = "Reusable OpenAI-compatible LLM benchmark harness (llama.cpp, SGLang, vLLM) for NVIDIA GB10 / DGX Spark"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[project.scripts]
+sparkbench = "sparkbench.cli:main"
+
+[tool.setuptools]
+packages = ["sparkbench", "sparkbench.suites", "sparkbench.importers"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+# Legacy one-off scripts are kept verbatim as historical artifacts.
+extend-exclude = [
+  "run_benchmark.py",
+  "make_report.py",
+  "fetch_data.py",
+  "mtp_sweep",
+  "q4_q6_compare",
+  "extended_validation",
+  "soak_partial",
+  "launchers",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["sparkbench"]

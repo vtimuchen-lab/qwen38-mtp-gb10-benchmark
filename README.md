@@ -455,6 +455,131 @@ Relevant artifacts:
 - [`results/q6.json`](results/q6.json)
 - [`results/summary.json`](results/summary.json)
 
+## Harness v1
+
+The one-off scripts above are hard-wired to one machine. `sparkbench/` is the reusable replacement: the same suites and scorers, driven by a TOML config against any OpenAI-compatible `/v1/chat/completions` server (llama.cpp `llama-server`, SGLang, vLLM), writing one uniform result format. It needs Python 3.12 and the standard library only (pytest, ruff and mypy for development).
+
+```text
+sparkbench/            harness package (python -m sparkbench ...)
+  suites/              the 7 suites and scorers moved from run_benchmark.py, logic unchanged
+  importers/           converters for every historical result file
+schemas/result.v1.json JSON Schema of sparkbench.result.v1
+examples/*.toml        run configs: all host paths, model files and server flags live here
+results/v1/            historical results converted to v1 (28 files; sources untouched)
+tests/                 pytest suite: fake OpenAI server, scorer fixtures, README regression
+```
+
+### Commands
+
+```bash
+python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml             # all 7 suites
+python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml --smoke     # 2-3 cases per suite
+python -m sparkbench run --config X.toml --suite tools --suite stability_100      # selected suites
+python -m sparkbench report A.json B.json [--out report.md] [--json summary.json] # paired A/B report
+python -m sparkbench compare-hosts A.json B.json [--out hosts.md] [--fail-on-diff]
+python -m sparkbench validate results/v1/*.json
+python -m sparkbench import                                                       # rebuild results/v1/
+```
+
+`run` checkpoints after every case to `<output>.raw.json` (full server responses) and rewrites `<output>.json` (v1). Re-running the same command resumes; a checkpoint from a different config is refused unless `--fresh` is given.
+
+### Config: llama.cpp
+
+[`examples/llamacpp-gb10-q4-mtp7.toml`](examples/llamacpp-gb10-q4-mtp7.toml) is the published Q4 run expressed as config; its `config_sha256` equals the one recorded in `results/v1/main_q4_mtp7.json`. Abridged:
+
+```toml
+[run]
+label = "q4-mtp7"
+output = "results/runs/q4-mtp7.json"
+
+[model]
+name = "qwen3.8-MTP:27b"            # model id sent in requests
+file = "/usr/share/ollama/.ollama/models/blobs/sha256-bee238bb..."
+sha256 = "bee238bbeb3dc0a34bde4d0dedbaee1f98c009e8bb4226f03070054c12fb1372"
+
+[runtime]
+name = "llama.cpp"
+version = "d2f83055d6e3b379b5d34c4837122a918cf402c2"
+
+[backend]
+base_url = "http://127.0.0.1:18084"
+tokenizer = "llama.cpp"             # /tokenize, used to size long-context prompts
+extra_body = { cache_prompt = false }
+
+[server]                            # optional: omit to use an already running server
+command = ["/home/admin/llama.cpp-main-20260810/build/bin/llama-server",
+           "--model", "...", "--alias", "qwen3.8-MTP:27b", "--port", "18084",
+           "--ctx-size", "65536", "--spec-type", "draft-mtp", "--spec-draft-n-max", "7", "..."]
+
+[request]
+temperature = 0
+seed = 42
+
+[parameters]                        # recorded verbatim in the result
+mtp_depth = 7
+context = 65536
+```
+
+### Config: SGLang
+
+[`examples/sglang-q4.toml`](examples/sglang-q4.toml) (and [`examples/vllm-q4.toml`](examples/vllm-q4.toml)) use the same suites. The paths and speculative-decoding flags there are placeholders to adapt to the installed version:
+
+```toml
+[model]
+name = "qwen3.8-27b"                 # --served-model-name
+
+[runtime]
+name = "sglang"
+
+[backend]
+base_url = "http://127.0.0.1:30000"
+tokenizer = "openai-tokenize"        # POST /tokenize {"model", "prompt"}
+extra_body = {}                      # no llama.cpp-only request fields
+
+[server]
+command = ["python3", "-m", "sglang.launch_server", "--model-path", "/models/Qwen3.8-27B-AWQ",
+           "--served-model-name", "qwen3.8-27b", "--port", "30000", "--context-length", "65536",
+           "--speculative-algorithm", "NEXTN", "--speculative-num-steps", "7"]
+ready_timeout = 1200
+```
+
+SGLang and vLLM return no llama.cpp `timings`, so decode tok/s is `completion_tokens / request wall time` (marked `timing_source: "wall"`; it includes prefill) and MTP acceptance is not available. Compare such runs with runs of the same runtime.
+
+### Comparing two hosts
+
+Run the same config on both machines. Only host-specific values (paths, URL, `[host]`) may differ: `workload_sha256` ignores them, so `compare-hosts` can confirm that both sides measured the same workload.
+
+```bash
+# on spark-1
+python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml --output results/runs/spark1-q4.json
+# on spark-2 (same file; edit [model] file / [server] command only if paths differ)
+python -m sparkbench run --config examples/llamacpp-gb10-q4-mtp7.toml --output results/runs/spark2-q4.json
+# on either machine, after copying both JSON files
+python -m sparkbench validate results/runs/spark1-q4.json results/runs/spark2-q4.json
+python -m sparkbench compare-hosts results/runs/spark1-q4.json results/runs/spark2-q4.json --out results/runs/spark1-vs-spark2.md
+```
+
+The comparison reports decode and prefill tok/s per suite with the B/A delta and the median per-case ratio, then checks answer identity case by case: identical outputs, differences that change a number in the answer (listed separately with the numbers only on one side and the final number on each side), text-only differences, and pass/fail flips. `--fail-on-diff` returns exit code 1 if any paired answer differs.
+
+### Result format `sparkbench.result.v1`
+
+One JSON file per run, validated by [`schemas/result.v1.json`](schemas/result.v1.json). It keeps the `results/q4.json` layout (`schema`, `quant`, `model`, `runtime`, `parameters`, `suites`, timings) and adds `host` (name, GPU, driver, arch, kernel), `backend` (URL, request extras, tokenizer), `config_sha256`, `workload_sha256`, the parsed config, and `source` (run or import, with source file hashes). Every suite has `quality`, `verdicts`, `metrics`, an `aggregate` computed exactly as before, and uniform per-case records: `id`, `verdict`, `prompt_sha256`, prompt/generated/draft tokens, wall/prefill/decode time, tok/s, finish reason, content and `content_sha256`, plus tool calls and earlier turns when present.
+
+`results/v1/` holds the historical runs converted by `python -m sparkbench import`: the main Q4/Q6 runs, 15 MTP sweep modes, the Q6 comparison run, 6 mixed mini-sweep modes, the prefix-cache A/B, and the partial soak (one file per quant, with per-request records from `requests.ndjson`). `python -m sparkbench report results/v1/main_q4_mtp7.json results/v1/main_q6_mtp7.json` reproduces the tables in this README.
+
+### Data and scorer dependencies
+
+The suites read the same inputs as before: `data/` from `fetch_data.py`, HumanEval from `vendor/human-eval`, and Google's IFEval scorer from `vendor/google-research` (it needs `nltk`, `langdetect` and `absl-py` in the environment that runs IFEval). HumanEval completions run in the same networkless read-only Docker sandbox (`python:3.12-slim`). Paths can be changed in `[data]`.
+
+### Development
+
+```bash
+python3.12 -m venv .venv && .venv/bin/pip install pytest ruff mypy
+.venv/bin/python -m pytest          # no network or GPU needed
+.venv/bin/ruff check .
+.venv/bin/mypy --strict sparkbench
+```
+
 ## 72-hour soak test (stopped early; partial results)
 
 The following protocol was defined before the run. The validated service started at **2026-08-20 07:44:53 UTC**; the first Q4 preflight passed with exact output, `draft_n=357`, `draft_n_accepted=353`, and the MTP fail-closed guard active. The operator stopped the service at approximately **2026-08-20 14:02:29 UTC**, after about 6 h 17 min. This does not constitute a completed 72-hour reliability result. Raw partial data are retained and reported without changing the predeclared criteria.

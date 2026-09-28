@@ -1,0 +1,37 @@
+[
+ {
+  "key": 1001,
+  "prompt": "Write a two sentence note about rain. Use only lowercase letters.",
+  "instruction_id_list": [
+   "change_case:english_lowercase"
+  ],
+  "kwargs": [
+   {}
+  ]
+ },
+ {
+  "key": 1002,
+  "prompt": "Write a short email to a friend. End it with a postscript starting with P.S.",
+  "instruction_id_list": [
+   "detectable_content:postscript"
+  ],
+  "kwargs": [
+   {
+    "postscript_marker": "P.S."
+   }
+  ]
+ },
+ {
+  "key": 1003,
+  "prompt": "Describe a lighthouse in at least 40 words.",
+  "instruction_id_list": [
+   "length_constraints:number_words"
+  ],
+  "kwargs": [
+   {
+    "relation": "at least",
+    "num_words": 40
+   }
+  ]
+ }
+]
